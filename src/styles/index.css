@@ -3,3 +3,4 @@
 @tailwind utilities;
 
 @import url("../components/Button/Button.css");
+@import url("../components/Card/Card.css");

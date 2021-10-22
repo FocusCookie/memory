@@ -1,0 +1,7 @@
+.Card {
+  @apply border-green-500 border border-solid hover:border-yellow-500;
+}
+
+.Card--dark {
+  @apply bg-gray-700 text-white;
+}
