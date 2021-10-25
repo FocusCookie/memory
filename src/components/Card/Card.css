@@ -1,7 +1,7 @@
-.Card {
+.card {
   @apply border-green-500 border border-solid hover:border-yellow-500;
 }
 
-.Card--dark {
+.card--dark {
   @apply bg-gray-700 text-white;
 }
