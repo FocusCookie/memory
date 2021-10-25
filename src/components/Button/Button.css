@@ -3,7 +3,7 @@
 }
 
 .btn:focus {
-  @apply focus:outline-none focus:ring-2 focus:ring-primary;
+  @apply focus:outline-none focus:ring-8 focus:ring-primary-light;
 }
 
 .btn--primary {
