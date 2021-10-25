@@ -7,9 +7,9 @@ module.exports = {
         transparent: "transparent",
         current: "currentColor",
         primary: {
-          light: "var(--color-primary--light)",
-          DEFAULT: "var(--color-primary)",
-          dark: "var(--color-primary--dark)",
+          light: "var(--color--primary-light)",
+          DEFAULT: "var(--color--primary)",
+          dark: "var(--color--primary-dark)",
         },
       },
     },
