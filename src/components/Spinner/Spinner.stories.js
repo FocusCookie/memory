@@ -12,4 +12,5 @@ const Template = (args) => <Spinner {...args} />;
 export const Default = Template.bind({});
 Default.args = {
   color: "red",
+  size: "2rem",
 };

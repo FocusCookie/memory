@@ -8,6 +8,7 @@ export const Button = ({ label, variant, loading, ...props }) => {
       {loading ? (
         <Spinner
           color={variant === "primary" ? "#FFFFFF" : "var(--color--primary)"}
+          size="1.5rem"
         />
       ) : (
         label
