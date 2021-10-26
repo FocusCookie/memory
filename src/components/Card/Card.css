@@ -1,7 +1,3 @@
 .card {
-  @apply border-green-500 border border-solid hover:border-yellow-500;
-}
-
-.card--dark {
-  @apply bg-gray-700 text-white;
+  @apply overflow-hidden filter drop-shadow-md border rounded-xl border-solid border-greyscale-line bg-greyscale-inputBackground p-0;
 }
