@@ -2,7 +2,7 @@
 
 .playCard {
   perspective: 1000px; /* Remove this if you don't want the 3D effect */
-  @apply h-32 w-32 rounded-xl drop-shadow overflow-hidden;
+  @apply h-32 w-32 rounded-xl filter drop-shadow overflow-hidden;
 }
 
 .playCard__inner {
