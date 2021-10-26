@@ -8,7 +8,9 @@ export const Button = ({ label, variant, loading, ...props }) => {
       {loading ? (
         <Spinner
           strokeColor={
-            variant === "primary" ? "#FFFFFF" : "var(--color--primary)"
+            variant === "primary"
+              ? "var(--color--greyscale-offWhite)"
+              : "var(--color--primary)"
           }
           size="1.5rem"
         />
