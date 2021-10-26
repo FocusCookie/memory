@@ -1,0 +1,37 @@
+/* Flip animation from  https://www.w3schools.com/howto/howto_css_flip_card.asp */
+
+.playCard {
+  perspective: 1000px; /* Remove this if you don't want the 3D effect */
+  @apply h-32 w-32 rounded-xl drop-shadow overflow-hidden;
+}
+
+.playCard__inner {
+  transition: transform 500ms;
+  transform-style: preserve-3d;
+  @apply rounded-xl h-full w-full text-center relative;
+}
+
+.flip {
+  transform: rotateY(180deg);
+}
+
+.playCard__front,
+.playCard__back {
+  -webkit-backface-visibility: hidden; /* Safari */
+  backface-visibility: hidden;
+  @apply h-full w-full absolute;
+}
+
+.playCard__front {
+  background-image: url("../../assets/PlayCardCover.png");
+  max-width: 300px;
+  max-height: 300px;
+  @apply bg-cover;
+}
+
+.playCard__back {
+  color: white;
+  text-shadow: 0px 0px 3px #000;
+  transform: rotateY(180deg);
+  @apply bg-cover text-base font-bold flex flex-col justify-end;
+}
