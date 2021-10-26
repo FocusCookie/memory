@@ -7,7 +7,9 @@ export const Button = ({ label, variant, loading, ...props }) => {
     <button className={`btn btn--${variant}`} {...props}>
       {loading ? (
         <Spinner
-          color={variant === "primary" ? "#FFFFFF" : "var(--color--primary)"}
+          strokeColor={
+            variant === "primary" ? "#FFFFFF" : "var(--color--primary)"
+          }
           size="1.5rem"
         />
       ) : (
@@ -23,9 +25,9 @@ Button.propTypes = {
    */
   label: PropTypes.string.isRequired,
   /**
-   * Optional button variant, defaults to primary
+   * Optional button variant, defaults to "primary"
    */
-  variant: PropTypes.string,
+  variant: PropTypes.oneOf(["primary", "secondary"]),
   /**
    * Optional, determines whether to render the label or a loading spinner, defaults to false
    */

@@ -1,5 +1,9 @@
 .btn {
-  @apply rounded-full py-2 px-4;
+  @apply rounded-full border-2 border-primary py-2 px-4;
+}
+
+.btn:disabled {
+  @apply border-primary-light;
 }
 
 .btn:focus {
@@ -15,9 +19,9 @@
 }
 
 .btn--secondary {
-  @apply text-primary bg-white border-2 border-primary hover:border-primary-dark;
+  @apply text-primary bg-white hover:border-primary-dark;
 }
 
 .btn--secondary:disabled {
-  @apply text-primary-light border-primary-light;
+  @apply text-primary-light;
 }

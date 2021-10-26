@@ -20,3 +20,15 @@ Secondary.args = {
   label: "Secondary Button",
   variant: "secondary",
 };
+
+export const Loading = Template.bind({});
+Loading.args = {
+  label: "Loading Button",
+  loading: true,
+};
+
+export const Disabled = Template.bind({});
+Disabled.args = {
+  label: "Disabled Button",
+  disabled: true,
+};
