@@ -1,7 +1,15 @@
 :root {
-  --color-primary-light: #ded3ff;
-  --color-primary: #5f2eea;
-  --color-primary-dark: #2a00a2;
+  --color--primary-light: #ded3ff;
+  --color--primary: #5f2eea;
+  --color--primary-dark: #2a00a2;
+  --color--greyscale-line: #d6d8e7;
+  --color--greyscale-offWhite: #fcfcfc;
+  --color--greyscale-inputBackground: #eff0f6;
+  --color--greyscale-background: #f7f7fc;
+  --color--greyscale-placeholder: #a0a3bd;
+  --color--greyscale-label: #6e7191;
+  --color--greyscale-body: #4e4b66;
+  --color--greyscale-titleActive: #14142b;
 }
 
 @tailwind base;
