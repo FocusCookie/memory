@@ -1,0 +1,27 @@
+.menu__inner {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  @apply p-4 pt-8 pb-1;
+}
+
+.menu__inner > nav {
+  @apply mb-4;
+}
+
+.menu__outer {
+  @apply w-full flex justify-center overflow-hidden px-4;
+}
+
+.menu__outer > * {
+  transform: translateY(-1rem);
+  @apply w-max;
+}
+
+.menu--closed nav {
+  display: none;
+}
+
+.menu--closed .menu__chevron {
+  transform: rotate(180deg);
+}
