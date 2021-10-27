@@ -1,8 +1,5 @@
 .menu__inner {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  @apply p-4 pt-8 pb-1;
+  @apply flex flex-col items-center p-4 pt-8 pb-1;
 }
 
 .menu__inner > nav {

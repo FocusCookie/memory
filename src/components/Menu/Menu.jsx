@@ -4,7 +4,7 @@ import { Card } from "../Card/Card";
 import { Button } from "../Button/Button";
 import { BsChevronUp } from "react-icons/bs";
 
-export const Menu = ({ initiallyOpen, cancelGame, resetGame }) => {
+export const Menu = ({ initiallyOpen, onCancel, onReset }) => {
   const [open, setOpen] = useState(initiallyOpen);
   const toggleMenu = () => {
     setOpen(!open);
@@ -18,9 +18,9 @@ export const Menu = ({ initiallyOpen, cancelGame, resetGame }) => {
             <Button
               label="CANCEL GAME"
               variant="secondary"
-              onClick={cancelGame}
+              onClick={onCancel}
             />
-            <Button label="RESET GAME" onClick={resetGame} />
+            <Button label="RESET GAME" onClick={onReset} />
           </nav>
           <BsChevronUp className="menu__chevron" onClick={toggleMenu} />
         </div>
@@ -35,13 +35,13 @@ Menu.propTypes = {
    */
   initiallyOpen: PropTypes.bool,
   /**
-   * Whether the Menu starts open or closed
+   * Eventhandler for the "CANCEL GAME" Button
    */
-  cancelGame: PropTypes.func.isRequired,
+  onCancel: PropTypes.func.isRequired,
   /**
-   * Whether the Menu starts open or closed
+   * Eventhandler for the "RESET GAME" Button
    */
-  resetGame: PropTypes.func.isRequired,
+  onReset: PropTypes.func.isRequired,
 };
 
 Menu.defaultProps = {
