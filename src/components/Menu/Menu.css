@@ -3,7 +3,7 @@
 }
 
 .menu__inner > nav {
-  @apply mb-4;
+  @apply flex flex-row gap-4;
 }
 
 .menu__outer {
