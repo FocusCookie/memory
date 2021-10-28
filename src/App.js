@@ -1,9 +1,10 @@
 import "./styles/App.css";
+import { Home } from "./views/Home";
 
 function App() {
   return (
     <div className="App">
-      <h1>Rick and Morty</h1>
+      <Home />
     </div>
   );
 }
