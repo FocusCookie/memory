@@ -1,7 +1,7 @@
 import React from "react";
-import { Card } from "../components/Card/Card";
-import { Button } from "../components/Button/Button";
-import coverImg from "../assets/Cover.jpg";
+import { Card } from "../../components/Card/Card";
+import { Button } from "../../components/Button/Button";
+import coverImg from "../../assets/Cover.jpg";
 
 export function Home({ ...props }) {
   return (
@@ -11,9 +11,9 @@ export function Home({ ...props }) {
     >
       <Card>
         <img src={coverImg} alt="Rick and Morty" style={{ width: "27rem" }} />
-        <div className="p-4 pt-3">
+        <div className="p-4 pt-3 flex flex-col gap-4">
           <h1
-            className="font-black text-primary uppercase pb-4"
+            className="font-black text-primary uppercase"
             style={{ fontSize: "2rem" }}
           >
             rick & morty memory
