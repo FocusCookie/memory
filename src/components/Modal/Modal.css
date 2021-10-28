@@ -1,0 +1,19 @@
+.modal {
+  @apply flex justify-center items-center absolute top-0 right-0 bottom-0 left-0 bg-greyscale-label opacity-50 p-0 z-50;
+}
+
+.modal > * {
+  animation: slideIn;
+  animation-duration: 300ms;
+  animation-iteration-count: 1;
+  animation-timing-function: ease;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(3rem);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
