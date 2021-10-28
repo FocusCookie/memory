@@ -1,11 +1,22 @@
 import "./styles/App.css";
-import { Home } from "./views/Home/Home";
 
-//TODO: Router einbauen
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { Home } from "./views/Home/Home";
+import { Game } from "./views/Game/Game";
+
 function App() {
   return (
     <div className="App">
-      <Home />
+      <Router>
+        <Switch>
+          <Route exact path="/">
+            <Home />
+          </Route>
+          <Route path="/game">
+            <Game />
+          </Route>
+        </Switch>
+      </Router>
     </div>
   );
 }
