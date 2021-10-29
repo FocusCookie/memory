@@ -3,7 +3,11 @@ import PropTypes from "prop-types";
 
 export const PlayCard = ({ reveal, cleared, onClick, character, ...props }) => {
   return (
-    <div className="playCard" {...props}>
+    <div
+      className="playCard"
+      onClick={() => (!cleared && !reveal ? onClick() : null)}
+      {...props}
+    >
       {cleared ? null : (
         <div class={reveal ? "playCard__inner flip" : "playCard__inner"}>
           <div class="playCard__front"></div>
