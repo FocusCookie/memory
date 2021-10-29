@@ -48,11 +48,12 @@ export const Gameboard = ({ characters, ...props }) => {
     if (isPair(turn)) {
       clearCards();
     } else {
-      unrevealCards();
+      unrevealCards(turn);
     }
   };
 
   const handleEndOfTurn = () => {
+    console.log("EOT");
     handleRevealedCards();
     setTurn([]);
     setTurnCounter(turnCounter + 1);
@@ -77,8 +78,7 @@ export const Gameboard = ({ characters, ...props }) => {
   };
 
   const handlePlaycardClick = (id) => {
-    // guard clause, so you can't click a revealed card
-    if (turn.includes(id)) return;
+    console.log("clicked: ", id);
 
     updateTurn(id);
     updateBoard(id);
@@ -87,8 +87,20 @@ export const Gameboard = ({ characters, ...props }) => {
     if (gameIsOver(board)) setGameOver(true);
   };
 
+  // useEffect(() => {
+  //   if (endOfTurn(turn)) handleEndOfTurn();
+  //   if (gameIsOver(board)) setGameOver(true);
+  // }, [turn, board]);
+
   const renderCard = (card) => {
-    return <PlayCard key={card.id} onClick={handlePlaycardClick} {...card} />;
+    // card.id = Number(card.id);
+    return (
+      <PlayCard
+        key={card.id}
+        onClick={() => handlePlaycardClick(card.id)}
+        {...card}
+      />
+    );
   };
 
   return (

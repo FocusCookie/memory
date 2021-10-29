@@ -9,10 +9,10 @@ export const PlayCard = ({ reveal, cleared, onClick, character, ...props }) => {
       {...props}
     >
       {cleared ? null : (
-        <div class={reveal ? "playCard__inner flip" : "playCard__inner"}>
-          <div class="playCard__front"></div>
+        <div className={reveal ? "playCard__inner flip" : "playCard__inner"}>
+          <div className="playCard__front"></div>
           <div
-            class="playCard__back"
+            className="playCard__back"
             style={{ backgroundImage: `url(${character.image})` }}
           >
             {character.name}
