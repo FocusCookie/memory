@@ -7,13 +7,29 @@ import {
   isPair,
 } from "../../services/game.service";
 import { PlayCard } from "../PlayCard/PlayCard";
-import { Modal } from "../Modal/Modal";
 
-export const Gameboard = ({ cards, ...props }) => {
+export const Gameboard = ({ cards, onGameOver, ...props }) => {
   const [board, setBoard] = useState(initializeBoard(cards));
   const [turn, setTurn] = useState([]);
   const [turnCounter, setTurnCounter] = useState(0);
   const [gameOver, setGameOver] = useState(false);
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      if (endOfTurn(turn)) handleEndOfTurn(turn);
+      if (gameIsOver(board)) setGameOver(true);
+    }, 1000);
+
+    return () => {
+      clearTimeout(timeoutId);
+    };
+  }, [turn]);
+
+  useEffect(() => {
+    if (gameOver) {
+      onGameOver();
+    }
+  }, [gameOver]);
 
   const clearCards = (ids) => {
     const newBoard = board.map((card) => {
@@ -81,13 +97,6 @@ export const Gameboard = ({ cards, ...props }) => {
     updateBoard(id);
   };
 
-  useEffect(() => {
-    setTimeout(() => {
-      if (endOfTurn(turn)) handleEndOfTurn(turn);
-      if (gameIsOver(board)) setGameOver(true);
-    }, 1000);
-  }, [turn]);
-
   const renderCard = (card) => {
     return (
       <PlayCard
@@ -99,16 +108,9 @@ export const Gameboard = ({ cards, ...props }) => {
   };
 
   return (
-    <>
-      <div className="board" {...props}>
-        {board.map((card) => renderCard(card))}
-      </div>
-      {gameOver && (
-        <Modal>
-          <h1>GAME OVER</h1>
-        </Modal>
-      )}
-    </>
+    <div className="board" {...props}>
+      {board.map((card) => renderCard(card))}
+    </div>
   );
 };
 
@@ -125,6 +127,10 @@ Gameboard.propTypes = {
       }),
     })
   ).isRequired,
+  /**
+   * Is fired when game is over
+   */
+  onGameOver: PropTypes.func.isRequired,
 };
 
 Gameboard.defaultProps = {};
