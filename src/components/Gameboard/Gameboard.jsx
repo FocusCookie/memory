@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import {
   initializeBoard,
@@ -9,8 +9,8 @@ import {
 import { PlayCard } from "../PlayCard/PlayCard";
 import { Modal } from "../Modal/Modal";
 
-export const Gameboard = ({ characters, ...props }) => {
-  const [board, setBoard] = useState(initializeBoard(characters));
+export const Gameboard = ({ cards, ...props }) => {
+  const [board, setBoard] = useState(initializeBoard(cards));
   const [turn, setTurn] = useState([]);
   const [turnCounter, setTurnCounter] = useState(0);
   const [gameOver, setGameOver] = useState(false);
@@ -21,7 +21,7 @@ export const Gameboard = ({ characters, ...props }) => {
         return {
           ...card,
           reveal: false,
-          clear: true,
+          cleared: true,
         };
       }
       return card;
@@ -44,17 +44,16 @@ export const Gameboard = ({ characters, ...props }) => {
     setBoard(newBoard);
   };
 
-  const handleRevealedCards = () => {
+  const handleRevealedCards = (turn) => {
     if (isPair(turn)) {
-      clearCards();
+      clearCards(turn);
     } else {
       unrevealCards(turn);
     }
   };
 
-  const handleEndOfTurn = () => {
-    console.log("EOT");
-    handleRevealedCards();
+  const handleEndOfTurn = (turn) => {
+    handleRevealedCards(turn);
     setTurn([]);
     setTurnCounter(turnCounter + 1);
   };
@@ -78,22 +77,18 @@ export const Gameboard = ({ characters, ...props }) => {
   };
 
   const handlePlaycardClick = (id) => {
-    console.log("clicked: ", id);
-
     updateTurn(id);
     updateBoard(id);
-
-    if (endOfTurn(turn)) handleEndOfTurn();
-    if (gameIsOver(board)) setGameOver(true);
   };
 
-  // useEffect(() => {
-  //   if (endOfTurn(turn)) handleEndOfTurn();
-  //   if (gameIsOver(board)) setGameOver(true);
-  // }, [turn, board]);
+  useEffect(() => {
+    setTimeout(() => {
+      if (endOfTurn(turn)) handleEndOfTurn(turn);
+      if (gameIsOver(board)) setGameOver(true);
+    }, 1000);
+  }, [turn]);
 
   const renderCard = (card) => {
-    // card.id = Number(card.id);
     return (
       <PlayCard
         key={card.id}
@@ -105,7 +100,9 @@ export const Gameboard = ({ characters, ...props }) => {
 
   return (
     <>
-      <div className="board">{board.map((card) => renderCard(card))}</div>
+      <div className="board" {...props}>
+        {board.map((card) => renderCard(card))}
+      </div>
       {gameOver && (
         <Modal>
           <h1>GAME OVER</h1>
@@ -119,9 +116,9 @@ Gameboard.propTypes = {
   /**
    * Number of pairs to play with
    */
-  characters: PropTypes.arrayOf(
+  cards: PropTypes.arrayOf(
     PropTypes.shape({
-      character: PropTypes.shape({
+      card: PropTypes.shape({
         id: PropTypes.number,
         name: PropTypes.string,
         image: PropTypes.string,

@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-export const PlayCard = ({ reveal, cleared, onClick, character, ...props }) => {
+export const PlayCard = ({ reveal, cleared, onClick, card, ...props }) => {
   return (
     <div
       className="playCard"
@@ -13,9 +13,9 @@ export const PlayCard = ({ reveal, cleared, onClick, character, ...props }) => {
           <div className="playCard__front"></div>
           <div
             className="playCard__back"
-            style={{ backgroundImage: `url(${character.image})` }}
+            style={{ backgroundImage: `url(${card.image})` }}
           >
-            {character.name}
+            {card.name}
           </div>
         </div>
       )}
@@ -29,9 +29,9 @@ PlayCard.propTypes = {
    */
   onClick: PropTypes.func,
   /**
-   * Character which is represented by the card
+   * holds card data
    */
-  character: PropTypes.shape({
+  card: PropTypes.shape({
     id: PropTypes.number,
     name: PropTypes.string,
     image: PropTypes.string,
@@ -41,13 +41,13 @@ PlayCard.propTypes = {
    */
   cleared: PropTypes.bool,
   /**
-   * reveal - If true show the image from character.image
+   * reveal - If true show the image from card.image
    */
   reveal: PropTypes.bool,
 };
 
 PlayCard.defaultProps = {
-  character: {},
+  card: {},
   cleared: false,
   reveal: false,
   onClick: undefined,
