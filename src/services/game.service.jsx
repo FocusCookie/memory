@@ -29,3 +29,5 @@ export const gameIsOver = (board) =>
   board.filter((card) => card.cleared).length === board.length;
 
 export const isPair = (ids) => ids[0] + ids[1] === 0;
+
+export const turnIsAllowed = (turn) => turn.length < 2;

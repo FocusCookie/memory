@@ -5,6 +5,7 @@ import {
   endOfTurn,
   gameIsOver,
   isPair,
+  turnIsAllowed,
 } from "../../services/game.service";
 import { PlayCard } from "../PlayCard/PlayCard";
 
@@ -93,8 +94,10 @@ export const Gameboard = ({ cards, onGameOver, ...props }) => {
   };
 
   const handlePlaycardClick = (id) => {
-    updateTurn(id);
-    updateBoard(id);
+    if (turnIsAllowed(turn)) {
+      updateTurn(id);
+      updateBoard(id);
+    }
   };
 
   const renderCard = (card) => {
