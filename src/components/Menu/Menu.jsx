@@ -4,14 +4,14 @@ import { Card } from "../Card/Card";
 import { Button } from "../Button/Button";
 import { BsChevronUp } from "react-icons/bs";
 
-export const Menu = ({ initiallyOpen, onCancel, onReset }) => {
+export const Menu = ({ initiallyOpen, onCancel, onReset, ...props }) => {
   const [open, setOpen] = useState(initiallyOpen);
   const toggleMenu = () => {
     setOpen(!open);
   };
 
   return (
-    <div className={`menu__outer ${open ? "" : "menu--closed"}`}>
+    <div className={`menu__outer ${open ? "" : "menu--closed"}`} {...props}>
       <Card>
         <div className="menu__inner">
           <nav>
