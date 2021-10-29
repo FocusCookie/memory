@@ -15,6 +15,10 @@
   @apply w-max;
 }
 
+.menu__chevron  {
+  @apply p-2 box-content cursor-pointer;
+}
+
 .menu--closed nav {
   display: none;
 }
