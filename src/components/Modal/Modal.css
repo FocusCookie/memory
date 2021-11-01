@@ -1,5 +1,5 @@
 .modal {
-  @apply flex justify-center items-center absolute top-0 right-0 bottom-0 left-0 bg-greyscale-label opacity-50 p-0 z-50;
+  @apply flex justify-center items-center absolute top-0 right-0 bottom-0 left-0 bg-greyscale-label p-0 z-50;
 }
 
 .modal > * {
