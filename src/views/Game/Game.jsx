@@ -1,15 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import { Menu } from "../../components/Menu/Menu";
 import { Gameboard } from "../../components/Gameboard/Gameboard";
 import { Modal } from "../../components/Modal/Modal";
-import { getMockData } from "../../services/api.services";
-
-const data = getMockData().slice(0, 2);
+import { getCards } from "../../services/game.service";
 
 export function Game({ ...props }) {
+  useEffect(() => {
+    async function fetchCards() {
+      const cards = await getCards("rickmorty", 10);
+      setCards(cards);
+      setLoading(false);
+    }
+
+    fetchCards();
+  }, []);
+
+  const [cards, setCards] = useState([]);
   const history = useHistory();
   const [gameOver, setGameOver] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   return (
     <div
@@ -24,18 +34,23 @@ export function Game({ ...props }) {
         />
       </div>
       <div>
-        <h1>THIS IS THE GAMEVIEW</h1>
-        <Gameboard
-          cards={data}
-          onGameOver={() => {
-            setGameOver(true);
-          }}
-        />
+        {!loading ? (
+          <>
+            <Gameboard
+              cards={cards}
+              onGameOver={() => {
+                setGameOver(true);
+              }}
+            />
 
-        {gameOver && (
-          <Modal>
-            <h1>GAME OVER </h1>
-          </Modal>
+            {gameOver && (
+              <Modal>
+                <h1>GAME OVER </h1>
+              </Modal>
+            )}
+          </>
+        ) : (
+          <h1>Loading...</h1>
         )}
       </div>
     </div>
