@@ -3,16 +3,10 @@ import { useHistory } from "react-router";
 import { Menu } from "../../components/Menu/Menu";
 import { Gameboard } from "../../components/Gameboard/Gameboard";
 import { Modal } from "../../components/Modal/Modal";
-<<<<<<< HEAD
-import { getCards } from "../../services/game.service";
-=======
 import { Button } from "../../components/Button/Button";
 import { CardHiCF } from "../../components/CardHiCF/CardHiCF";
-import { getMockData } from "../../services/api.services";
+import { getCards } from "../../services/game.service";
 import cover from "../../assets/Cover.jpg";
-
-const data = getMockData().slice(0, 2);
->>>>>>> main
 
 export function Game({ ...props }) {
   useEffect(() => {
@@ -28,10 +22,8 @@ export function Game({ ...props }) {
   const [cards, setCards] = useState([]);
   const history = useHistory();
   const [gameOver, setGameOver] = useState(false);
-<<<<<<< HEAD
-  const [loading, setLoading] = useState(true);
-=======
   const [gameCount, setGameCount] = useState(1);
+  const [loading, setLoading] = useState(false);
 
   const resetGame = function () {
     setGameCount((last) => last + 1);
@@ -70,7 +62,6 @@ export function Game({ ...props }) {
       </div>
     ),
   };
->>>>>>> main
 
   return (
     <div
@@ -85,7 +76,6 @@ export function Game({ ...props }) {
         />
       </div>
       <div>
-<<<<<<< HEAD
         {!loading ? (
           <>
             <Gameboard
@@ -93,37 +83,23 @@ export function Game({ ...props }) {
               onGameOver={() => {
                 setGameOver(true);
               }}
+              key={gameCount}
             />
 
             {gameOver && (
               <Modal>
-                <h1>GAME OVER </h1>
+                <div className="w-1/2 opacity-100">
+                  <CardHiCF
+                    img={gameOverCard.img}
+                    content={gameOverCard.content}
+                    footer={gameOverCard.footer}
+                  />
+                </div>
               </Modal>
             )}
           </>
         ) : (
           <h1>Loading...</h1>
-=======
-        <h1>THIS IS THE GAMEVIEW</h1>
-        <Gameboard
-          cards={data}
-          onGameOver={() => {
-            setGameOver(true);
-          }}
-          key={gameCount}
-        />
-
-        {gameOver && (
-          <Modal>
-            <div className="w-1/2 opacity-100">
-              <CardHiCF
-                img={gameOverCard.img}
-                content={gameOverCard.content}
-                footer={gameOverCard.footer}
-              />
-            </div>
-          </Modal>
->>>>>>> main
         )}
       </div>
     </div>
