@@ -23,7 +23,7 @@ export function Game({ ...props }) {
   const history = useHistory();
   const [gameOver, setGameOver] = useState(false);
   const [gameCount, setGameCount] = useState(1);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const resetGame = function () {
     setGameCount((last) => last + 1);
@@ -66,16 +66,16 @@ export function Game({ ...props }) {
   return (
     <div
       {...props}
-      className="flex flex-col justify-center items-center h-screen w-screen"
+      className="flex flex-col justify-center items-center  w-screen"
     >
-      <div className="absolute top-0 w-full">
+      <div>
         <Menu
           onCancel={() => history.push("/")}
           onReset={() => resetGame()}
           initiallyOpen={false}
         />
       </div>
-      <div>
+      <div className="p-10">
         {!loading ? (
           <>
             <Gameboard
