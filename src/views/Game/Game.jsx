@@ -52,7 +52,12 @@ export function Game({ ...props }) {
       </div>
     ),
     footer: (
-      <div>
+      <div className="flex flex-row gap-4 items-center justify-around">
+        <Button
+          label="HOME"
+          variant="secondary"
+          onClick={() => history.push("/")}
+        />
         <Button
           label="PLAY AGAIN"
           onClick={() => {

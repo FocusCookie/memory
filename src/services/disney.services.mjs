@@ -1,52 +1,42 @@
 import axios from "axios";
+import {
+  randomNumberInLimit,
+  getApiItemsFromMultiplePages,
+} from "../helper/utils.helper";
+import { createCardObject } from "../services/game.service.jsx";
 
+const BASE_URL = "https://api.disneyapi.dev";
 const api = axios.create({
   baseURL: "https://api.disneyapi.dev",
 });
 
-const MAX_PAGE = 149;
+const MAX_PAGE = 148;
 const MAX_ITEMS_PER_PAGE = 50;
 
-function randomPage(maxPage) {
-  return Math.floor(Math.random() * maxPage + 1);
-}
-
-function createCardObject(character) {
-  if (!character) throw new Error("Character is undefined");
-
-  const end = character.imageUrl.indexOf("/revision");
-
-  return {
-    id: character._id,
-    name: character.name,
-    image: end > -1 ? character.imageUrl.slice(0, end) : character.imageUrl,
-  };
-}
-
-async function getCards(amount) {
+//TODO: Limit the characters from the disney api because some of the chars doesn't have an imageUrl
+async function getCards(amount = 20) {
   try {
-    if (!amount || amount <= MAX_ITEMS_PER_PAGE) {
-      const res = await api.get(`/characters?page=${randomPage(MAX_PAGE)}`);
+    if (amount <= MAX_ITEMS_PER_PAGE) {
+      const res = await api.get(
+        `/characters?page=${randomNumberInLimit(MAX_PAGE)}`
+      );
 
       return res.data.data
-        .map((char) => createCardObject(char))
+        .map((char, index) => createCardObject(char, index, "disney"))
         .slice(0, amount);
     } else {
-      const pageQueries = [];
-
-      // call multiple pages if the card amount is bigger than MAX_ITEMS_PER_PAGE
-      for (let i = 0; i < Math.ceil(amount / MAX_ITEMS_PER_PAGE); i++) {
-        pageQueries.push(api.get(`/characters?page=${randomPage(MAX_PAGE)}`));
-      }
-
-      const cardPages = await Promise.all(pageQueries);
+      const cardPages = await getApiItemsFromMultiplePages({
+        url: BASE_URL,
+        method: "get",
+      });
 
       let cards = [];
-
       cardPages.forEach((page) => {
         cards = [
           ...cards,
-          ...page.data.data.map((char) => createCardObject(char)),
+          ...page.data.data.map((char, index) =>
+            createCardObject(char, index, "disney")
+          ),
         ];
       });
 

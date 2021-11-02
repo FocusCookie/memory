@@ -46,3 +46,31 @@ export const gameIsOver = (board) =>
 export const isPair = (ids) => ids[0] + ids[1] === 0;
 
 export const turnIsAllowed = (turn) => turn.length < 2;
+
+export const createCardObject = (character, index, theme) => {
+  if (!character) throw new Error("Character is undefined");
+
+  if (theme === "disney") {
+    //TODO: Limit the characters from the disney api because some of the chars doesn't have an imageUrl
+    let image =
+      "https://static-mh.content.disney.io/matterhorn/assets/goc/disney_logo_dark@2x-45d70f7dd57b.png";
+
+    // if the character has an image cut out the revision if no image is given the disney logo will be used
+    const end = character.imageUrl
+      ? character.imageUrl.indexOf("/revision")
+      : -1;
+    if (end > -1) image = character.imageUrl.slice(0, end);
+
+    return {
+      id: index + 1,
+      name: character.name,
+      image: image,
+    };
+  }
+
+  return {
+    id: index + 1,
+    name: character.name,
+    image: character.image,
+  };
+};
