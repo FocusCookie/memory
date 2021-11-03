@@ -1,19 +1,29 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import { Menu } from "../../components/Menu/Menu";
 import { Gameboard } from "../../components/Gameboard/Gameboard";
 import { Modal } from "../../components/Modal/Modal";
 import { Button } from "../../components/Button/Button";
 import { CardHiCF } from "../../components/CardHiCF/CardHiCF";
-import { getMockData } from "../../services/api.services";
+import { getCards } from "../../services/game.service";
 import cover from "../../assets/Cover.jpg";
 
-const data = getMockData().slice(0, 2);
-
 export function Game({ ...props }) {
+  useEffect(() => {
+    async function fetchCards() {
+      const cards = await getCards("rickmorty", 10);
+      setCards(cards);
+      setLoading(false);
+    }
+
+    fetchCards();
+  }, []);
+
+  const [cards, setCards] = useState([]);
   const history = useHistory();
   const [gameOver, setGameOver] = useState(false);
   const [gameCount, setGameCount] = useState(1);
+  const [loading, setLoading] = useState(true);
 
   const resetGame = function () {
     setGameCount((last) => last + 1);
@@ -42,7 +52,12 @@ export function Game({ ...props }) {
       </div>
     ),
     footer: (
-      <div>
+      <div className="flex flex-row gap-4 items-center justify-around">
+        <Button
+          label="HOME"
+          variant="secondary"
+          onClick={() => history.push("/")}
+        />
         <Button
           label="PLAY AGAIN"
           onClick={() => {
@@ -56,35 +71,40 @@ export function Game({ ...props }) {
   return (
     <div
       {...props}
-      className="flex flex-col justify-center items-center h-screen w-screen"
+      className="flex flex-col justify-center items-center  w-screen"
     >
-      <div className="absolute top-0 w-full">
+      <div>
         <Menu
           onCancel={() => history.push("/")}
           onReset={() => resetGame()}
           initiallyOpen={false}
         />
       </div>
-      <div>
-        <h1>THIS IS THE GAMEVIEW</h1>
-        <Gameboard
-          cards={data}
-          onGameOver={() => {
-            setGameOver(true);
-          }}
-          key={gameCount}
-        />
+      <div className="p-10">
+        {!loading ? (
+          <>
+            <Gameboard
+              cards={cards}
+              onGameOver={() => {
+                setGameOver(true);
+              }}
+              key={gameCount}
+            />
 
-        {gameOver && (
-          <Modal>
-            <div className="w-1/2 opacity-100">
-              <CardHiCF
-                img={gameOverCard.img}
-                content={gameOverCard.content}
-                footer={gameOverCard.footer}
-              />
-            </div>
-          </Modal>
+            {gameOver && (
+              <Modal>
+                <div className="w-1/2 opacity-100">
+                  <CardHiCF
+                    img={gameOverCard.img}
+                    content={gameOverCard.content}
+                    footer={gameOverCard.footer}
+                  />
+                </div>
+              </Modal>
+            )}
+          </>
+        ) : (
+          <h1>Loading...</h1>
         )}
       </div>
     </div>
