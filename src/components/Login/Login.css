@@ -1,5 +1,5 @@
 .login {
-  @apply w-96;
+  @apply w-full;
 }
 .login__form {
   @apply flex flex-col gap-4 p-4;

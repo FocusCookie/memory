@@ -15,13 +15,10 @@ export const Login = ({ onLogin, onRegister, ...props }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const caller = e.target.id;
-
-    const validPassword = password.length >= 6;
     const validEmail = isValidEmail(email);
+    const validPassword = password.length >= 6;
 
-    console.log("mail ", validEmail);
-    console.log("pw ", validPassword);
-    console.log("caler ", caller);
+    setError("");
 
     if (caller === "login" && validEmail && validPassword) {
       onLogin({ email, password });
@@ -30,11 +27,14 @@ export const Login = ({ onLogin, onRegister, ...props }) => {
       onRegister({ email, password });
     }
 
-    if (!validEmail) {
-      setError("Invalid email.");
-    }
-    if (!validPassword) {
-      setError("Invalid password. Minimum 6 characters are required.");
+    if (!validEmail || !validPassword) {
+      setError(
+        `${!validEmail ? "Invalid eMail." : ""} ${
+          !validPassword
+            ? "Invalid password - Minimum 6 characters are required."
+            : ""
+        }`
+      );
     }
   };
   const handleInputChange = (e) => {
@@ -82,7 +82,11 @@ export const Login = ({ onLogin, onRegister, ...props }) => {
       <CardHiCF
         img={coverImage}
         content={content}
-        footer={error !== "" ? <p>{error}</p> : null}
+        footer={
+          error !== "" ? (
+            <div className="text-center text-primary">{error}</div>
+          ) : null
+        }
       />
     </div>
   );
