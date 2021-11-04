@@ -3,16 +3,19 @@ import ReactDOM from "react-dom";
 import "./styles/index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { FirebaseAppProvider } from "reactfire";
+import { FirebaseAppProvider, AuthProvider } from "reactfire";
 import { firebaseConfig } from "./services/firebase.service";
-
+import { getAuth } from "firebase/auth";
+const auth = getAuth();
 ReactDOM.render(
   <FirebaseAppProvider firebaseConfig={firebaseConfig}>
-    <Suspense fallback={<h3>loading...</h3>}>
-      <React.StrictMode>
-        <App />
-      </React.StrictMode>
-    </Suspense>
+    <AuthProvider sdk={auth}>
+      <Suspense fallback={<h3>loading...</h3>}>
+        <React.StrictMode>
+          <App />
+        </React.StrictMode>
+      </Suspense>
+    </AuthProvider>
   </FirebaseAppProvider>,
   document.getElementById("root")
 );
