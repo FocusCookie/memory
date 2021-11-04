@@ -1,6 +1,8 @@
 import { getCards as getRickAndMortyCards } from "./rickmorty.service.mjs";
 import { getCards as getDisneyCards } from "./disney.services.mjs";
 import { getCards as getAmiiboCards } from "./amiibo.services.mjs";
+import { database } from "./firebase.service.mjs";
+import { ref, push, set } from "firebase/database";
 
 export const getCards = async function (theme, amount) {
   if (theme === "disney") {
@@ -16,7 +18,6 @@ export const getCards = async function (theme, amount) {
 const shuffle = (array) => [...array].sort((a, b) => 0.5 - Math.random());
 
 export const initializeBoard = (cards) => {
-  // split into two functions, seperating sideeffect of getting data
   const board = [];
   for (const card of cards) {
     const firstOfPair = {
@@ -73,4 +74,31 @@ export const createCardObject = (character, index, theme) => {
     name: character.name,
     image: character.image,
   };
+};
+
+export const createGameOnline = async ({
+  userID,
+  theme,
+  numberOfPairs,
+  maxNumberOfPlayers,
+}) => {
+  const cards = await getCards(theme, numberOfPairs);
+  const board = initializeBoard(cards);
+  const game = {
+    creator: userID,
+    players: [userID],
+    currentPlayer: "",
+    turns: [null],
+    state: "waiting",
+    rematch: { [userID]: false },
+    playersReady: { [userID]: false },
+    board,
+    maxNumberOfPlayers,
+    theme,
+    numberOfPairs,
+  };
+  const gamesListRef = ref(database, "games");
+  const gameRef = push(gamesListRef);
+  set(gameRef, game);
+  return gameRef;
 };

@@ -1,6 +1,6 @@
 import axios from "axios";
-import { randomNumberInLimit } from "../helper/utils.helper";
-import { createCardObject } from "../services/game.service.jsx";
+import { randomNumberInLimit } from "../helper/utils.helper.mjs";
+import { createCardObject } from "../services/game.service.mjs";
 
 const api = axios.create({
   baseURL: "https://www.amiiboapi.com/api",
