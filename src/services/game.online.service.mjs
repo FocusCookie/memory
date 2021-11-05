@@ -1,6 +1,6 @@
 import { initializeBoard, getCards } from "./game.offline.service.mjs";
 import { database } from "./firebase.service.mjs";
-import { ref, push, set } from "firebase/database";
+import { ref, push, set, update } from "firebase/database";
 
 export const createGameOnline = async ({
   userID,
@@ -27,4 +27,11 @@ export const createGameOnline = async ({
   const gameRef = push(gamesListRef);
   set(gameRef, game);
   return gameRef;
+};
+
+export const joinGameOnline = ({ userID, gameID }) => {
+  const updates = {
+    [`games/${gameID}/players/${userID}`]: true,
+  };
+  return update(ref(database), updates);
 };
