@@ -10,7 +10,7 @@ import cover from "../../assets/Cover.jpg";
 export function Game({ ...props }) {
   useEffect(() => {
     async function fetchCards() {
-      const cards = await getCards("rickmorty", 10);
+      const cards = await getCards("rickmorty", 2);
       setCards(cards);
       setLoading(false);
     }
@@ -37,13 +37,13 @@ export function Game({ ...props }) {
     content: (
       <div className="p-4 pt-3 flex flex-col gap-4">
         <p
-          className="font-black text-primary uppercase"
+          className="font-black text-primary uppercase text-center"
           style={{ fontSize: "2rem" }}
         >
           🎉 Congratulation 🎉
         </p>
         <p
-          className="font-black text-primary uppercase"
+          className="font-black text-primary uppercase text-center"
           style={{ fontSize: "2rem" }}
         >
           you finished the game!
