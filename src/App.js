@@ -8,18 +8,21 @@ import {
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Home } from "./views/Home/Home";
 import { Game } from "./views/Game/Game";
-import { Menu } from "./components/Menu/Menu";
 import { Login } from "./components/Login/Login";
 import { Button } from "./components/Button/Button";
+import { useState } from "react";
 
 function App() {
   const firebase = useFirebaseApp();
   const auth = getAuth();
   const { data: user } = useUser();
+  const [loadingLogin, setLoadingLogin] = useState(false);
 
   const handleRegister = async (user) => {
     try {
+      setLoadingLogin(true);
       await createUserWithEmailAndPassword(auth, user.email, user.password);
+      setLoadingLogin(false);
     } catch (error) {
       console.log(error.code);
       console.log(error.message);
@@ -28,7 +31,9 @@ function App() {
 
   const handleLogin = async (user) => {
     try {
+      setLoadingLogin(true);
       await signInWithEmailAndPassword(auth, user.email, user.password);
+      setLoadingLogin(false);
     } catch (error) {
       console.log(error.code);
       console.log(error.message);
@@ -58,7 +63,11 @@ function App() {
       ) : (
         <div class="w-screen h-screen flex flex-col justify-center items-center">
           <div className="w-96">
-            <Login onRegister={handleRegister} onLogin={handleLogin} />
+            <Login
+              loading={loadingLogin}
+              onRegister={handleRegister}
+              onLogin={handleLogin}
+            />
           </div>
         </div>
       )}
