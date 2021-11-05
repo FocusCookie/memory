@@ -1,5 +1,4 @@
 import "./styles/App.css";
-import { useUser } from "reactfire";
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -12,8 +11,12 @@ import { Login } from "./components/Login/Login";
 import { Menu } from "./components/Menu/Menu";
 import { Button } from "./components/Button/Button";
 import { useState } from "react";
+import { useFirebaseApp, DatabaseProvider, useUser } from "reactfire";
+import { getDatabase } from "firebase/database"; // Firebase v9+
 
 function App() {
+  const app = useFirebaseApp();
+  const database = getDatabase(app);
   const auth = getAuth();
   const { data: user } = useUser();
   const [loadingLogin, setLoadingLogin] = useState(false);
@@ -44,42 +47,44 @@ function App() {
   };
 
   return (
-    <div className="App">
-      {user ? (
-        <div className="flex flex-col gap-4 items-center">
-          <Menu initiallyOpen={false}>
-            <Button
-              label="LOGOUT"
-              variant="secondary"
-              onClick={() => {
-                auth.signOut();
-              }}
-            />
-          </Menu>
-          <Router>
-            <Switch>
-              <Route exact path="/">
-                <Home />
-              </Route>
-              <Route path="/game">
-                <Game />
-              </Route>
-            </Switch>
-          </Router>
-        </div>
-      ) : (
-        <div className="w-screen h-screen flex flex-col justify-center items-center">
-          <div className="w-96">
-            <Login
-              loading={loadingLogin}
-              onRegister={handleRegister}
-              onLogin={handleLogin}
-              error={loginError}
-            />
+    <DatabaseProvider sdk={database}>
+      <div className="App">
+        {user ? (
+          <div className="flex flex-col gap-4 items-center">
+            <Menu initiallyOpen={false}>
+              <Button
+                label="LOGOUT"
+                variant="secondary"
+                onClick={() => {
+                  auth.signOut();
+                }}
+              />
+            </Menu>
+            <Router>
+              <Switch>
+                <Route exact path="/">
+                  <Home />
+                </Route>
+                <Route path="/game">
+                  <Game />
+                </Route>
+              </Switch>
+            </Router>
           </div>
-        </div>
-      )}
-    </div>
+        ) : (
+          <div className="w-screen h-screen flex flex-col justify-center items-center">
+            <div className="w-96">
+              <Login
+                loading={loadingLogin}
+                onRegister={handleRegister}
+                onLogin={handleLogin}
+                error={loginError}
+              />
+            </div>
+          </div>
+        )}
+      </div>
+    </DatabaseProvider>
   );
 }
 
