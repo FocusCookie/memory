@@ -16,7 +16,6 @@ export const getCards = async function (theme, amount) {
 const shuffle = (array) => [...array].sort((a, b) => 0.5 - Math.random());
 
 export const initializeBoard = (cards) => {
-  // split into two functions, seperating sideeffect of getting data
   const board = [];
   for (const card of cards) {
     const firstOfPair = {

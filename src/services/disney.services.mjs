@@ -2,8 +2,8 @@ import axios from "axios";
 import {
   randomNumberInLimit,
   getApiItemsFromMultiplePages,
-} from "../helper/utils.helper";
-import { createCardObject } from "../services/game.service.jsx";
+} from "../helper/utils.helper.mjs";
+import { createCardObject } from "../services/game.service.mjs";
 
 const BASE_URL = "https://api.disneyapi.dev";
 const api = axios.create({
