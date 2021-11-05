@@ -1,5 +1,5 @@
 import "./styles/App.css";
-import { useFirebaseApp, useUser } from "reactfire";
+import { useUser } from "reactfire";
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -14,7 +14,6 @@ import { Button } from "./components/Button/Button";
 import { useState } from "react";
 
 function App() {
-  const firebase = useFirebaseApp();
   const auth = getAuth();
   const { data: user } = useUser();
   const [loadingLogin, setLoadingLogin] = useState(false);
