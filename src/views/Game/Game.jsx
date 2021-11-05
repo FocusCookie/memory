@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router";
-import { Menu } from "../../components/Menu/Menu";
 import { Gameboard } from "../../components/Gameboard/Gameboard";
 import { Modal } from "../../components/Modal/Modal";
 import { Button } from "../../components/Button/Button";
@@ -11,7 +10,7 @@ import cover from "../../assets/Cover.jpg";
 export function Game({ ...props }) {
   useEffect(() => {
     async function fetchCards() {
-      const cards = await getCards("rickmorty", 10);
+      const cards = await getCards("rickmorty", 2);
       setCards(cards);
       setLoading(false);
     }
@@ -38,13 +37,13 @@ export function Game({ ...props }) {
     content: (
       <div className="p-4 pt-3 flex flex-col gap-4">
         <p
-          className="font-black text-primary uppercase"
+          className="font-black text-primary uppercase text-center"
           style={{ fontSize: "2rem" }}
         >
           🎉 Congratulation 🎉
         </p>
         <p
-          className="font-black text-primary uppercase"
+          className="font-black text-primary uppercase text-center"
           style={{ fontSize: "2rem" }}
         >
           you finished the game!
@@ -73,12 +72,13 @@ export function Game({ ...props }) {
       {...props}
       className="flex flex-col justify-center items-center  w-screen"
     >
-      <div>
-        <Menu
-          onCancel={() => history.push("/")}
-          onReset={() => resetGame()}
-          initiallyOpen={false}
+      <div className="flex flex-row justify-center gap-4">
+        <Button
+          label="CANCEL GAME"
+          variant="secondary"
+          onClick={() => history.push("/")}
         />
+        <Button label="RESET GAME" onClick={() => resetGame()} />
       </div>
       <div className="p-10">
         {!loading ? (

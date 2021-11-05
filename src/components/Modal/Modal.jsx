@@ -3,7 +3,7 @@ import React from "react";
 export function Modal(props) {
   return (
     <div className="modal" {...props}>
-      {props.children}
+      <div className="modal__content">{props.children}</div>
     </div>
   );
 }
