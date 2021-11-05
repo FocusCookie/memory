@@ -8,6 +8,7 @@ import {
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Home } from "./views/Home/Home";
 import { Game } from "./views/Game/Game";
+import { Menu } from "./components/Menu/Menu";
 import { Login } from "./components/Login/Login";
 import { Button } from "./components/Button/Button";
 
@@ -55,8 +56,10 @@ function App() {
           </Switch>
         </Router>
       ) : (
-        <div className="w-96">
-          <Login onRegister={handleRegister} onLogin={handleLogin} />
+        <div class="w-screen h-screen flex flex-col justify-center items-center">
+          <div className="w-96">
+            <Login onRegister={handleRegister} onLogin={handleLogin} />
+          </div>
         </div>
       )}
     </div>

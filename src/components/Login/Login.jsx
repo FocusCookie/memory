@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { CardHiCF } from "../CardHiCF/CardHiCF";
 import { Button } from "../Button/Button";
+import { Spinner } from "../Spinner/Spinner";
 import { isValidEmail } from "../../helper/utils.helper";
 import Cover from "../../assets/Cover.jpg";
 
 const coverImage = { src: Cover, alt: "Rick & Morty Cover" };
 
-export const Login = ({ onLogin, onRegister, ...props }) => {
+export const Login = ({ onLogin, onRegister, loading, ...props }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -37,6 +38,7 @@ export const Login = ({ onLogin, onRegister, ...props }) => {
       );
     }
   };
+
   const handleInputChange = (e) => {
     const caller = e.target.id;
     const update = e.target.value;
@@ -57,6 +59,7 @@ export const Login = ({ onLogin, onRegister, ...props }) => {
         id="email"
         placeholder="eMail"
         onChange={handleInputChange}
+        disabled={loading}
       />
       <input
         type="password"
@@ -65,15 +68,28 @@ export const Login = ({ onLogin, onRegister, ...props }) => {
         name="password"
         id="password"
         onChange={handleInputChange}
+        disabled={loading}
       />
 
-      <Button id="login" label="LOGIN" type="submit" onClick={handleSubmit} />
       <Button
+        disabled={loading}
+        id="login"
+        label="LOGIN"
+        type="submit"
+        onClick={handleSubmit}
+      />
+      <Button
+        disabled={loading}
         id="register"
         label="REGISTER"
         variant="secondary"
         onClick={handleSubmit}
       />
+      {loading && (
+        <div className="flex flex-row justify-center">
+          <Spinner size="3rem" />
+        </div>
+      )}
     </form>
   );
 
@@ -101,9 +117,14 @@ Login.propTypes = {
    * Eventhandler for the register a new user
    */
   onRegister: PropTypes.func.isRequired,
+  /**
+   * Disables all the inputs an button if true
+   */
+  loading: PropTypes.bool,
 };
 
 Login.defaultProps = {
   onLogin: undefined,
   onRegister: undefined,
+  loading: false,
 };
