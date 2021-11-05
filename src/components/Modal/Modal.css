@@ -1,5 +1,12 @@
 .modal {
-  @apply flex justify-center items-center absolute top-0 right-0 bottom-0 left-0 bg-greyscale-label p-0 z-50;
+  background-color: rgba(0, 0, 0, 0.3);
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px);
+  @apply top-0 left-0 right-0 bottom-0 fixed;
+}
+
+.modal__content {
+  @apply relative top-0 left-0 z-50 flex justify-center items-center w-full h-full;
 }
 
 .modal > * {
