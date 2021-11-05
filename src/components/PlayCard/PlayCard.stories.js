@@ -8,12 +8,12 @@ export default {
 };
 
 const character = {
-  id: 2,
-  name: "Morty Smith",
-  image: "https://rickandmortyapi.com/api/character/avatar/2.jpeg",
+  id: 1,
+  name: "Taddy Mason",
+  image: "https://rickandmortyapi.com/api/character/avatar/341.jpeg",
 };
 
-const Template = (args) => <PlayCard character={character} {...args} />;
+const Template = (args) => <PlayCard card={character} {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {};

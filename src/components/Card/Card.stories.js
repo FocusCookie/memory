@@ -10,6 +10,7 @@ export default {
 
 const header = (
   <div
+    key="card-story-1"
     className="bg-center bg-cover h-80 flex justify-center items-center"
     style={{ backgroundImage: "url('https://source.unsplash.com/random/')" }}
   >
@@ -20,7 +21,7 @@ const header = (
 );
 
 const content = (
-  <div className="px-4">
+  <div key="card-story-2" className="px-4">
     <h1>This is some content</h1>
     <p>
       Lorem ipsum dolor sit amet, consectetur adipisicing elit. Natus explicabo
@@ -32,7 +33,10 @@ const content = (
 );
 
 const actions = (
-  <div className="px-4 pb-4 flex flex-row justify-around items-center">
+  <div
+    key="card-story-3"
+    className="px-4 pb-4 flex flex-row justify-around items-center"
+  >
     <Button label="Action 1" />
     <Button label="Action 2" />
   </div>
