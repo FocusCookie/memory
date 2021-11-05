@@ -35,5 +35,6 @@ Spinner.propTypes = {
 };
 
 Spinner.defaultProps = {
+  strokeColor: "var(--color--primary)",
   size: "1rem",
 };

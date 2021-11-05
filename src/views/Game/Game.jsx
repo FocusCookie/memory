@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router";
-import { Menu } from "../../components/Menu/Menu";
 import { Gameboard } from "../../components/Gameboard/Gameboard";
 import { Modal } from "../../components/Modal/Modal";
 import { Button } from "../../components/Button/Button";
@@ -73,12 +72,13 @@ export function Game({ ...props }) {
       {...props}
       className="flex flex-col justify-center items-center  w-screen"
     >
-      <div>
-        <Menu
-          onCancel={() => history.push("/")}
-          onReset={() => resetGame()}
-          initiallyOpen={false}
+      <div className="flex flex-row justify-center gap-4">
+        <Button
+          label="CANCEL GAME"
+          variant="secondary"
+          onClick={() => history.push("/")}
         />
+        <Button label="RESET GAME" onClick={() => resetGame()} />
       </div>
       <div className="p-10">
         {!loading ? (

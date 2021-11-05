@@ -1,0 +1,9 @@
+.login {
+  @apply w-full;
+}
+.login__form {
+  @apply flex flex-col gap-4 p-4;
+}
+.login__form input {
+  @apply rounded-md p-2 border border-solid border-greyscale-line;
+}
