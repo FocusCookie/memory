@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { CardHiCF } from "../CardHiCF/CardHiCF";
 import { Button } from "../Button/Button";
@@ -8,10 +8,14 @@ import Cover from "../../assets/Cover.jpg";
 
 const coverImage = { src: Cover, alt: "Rick & Morty Cover" };
 
-export const Login = ({ onLogin, onRegister, loading, ...props }) => {
+export const Login = ({ onLogin, onRegister, loading, error, ...props }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [errorMessage, setErrorMessage] = useState(error);
+
+  useEffect(() => {
+    setErrorMessage(error);
+  }, [error]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -19,7 +23,7 @@ export const Login = ({ onLogin, onRegister, loading, ...props }) => {
     const validEmail = isValidEmail(email);
     const validPassword = password.length >= 6;
 
-    setError("");
+    setErrorMessage("");
 
     if (caller === "login" && validEmail && validPassword) {
       onLogin({ email, password });
@@ -29,7 +33,7 @@ export const Login = ({ onLogin, onRegister, loading, ...props }) => {
     }
 
     if (!validEmail || !validPassword) {
-      setError(
+      setErrorMessage(
         `${!validEmail ? "Invalid eMail." : ""} ${
           !validPassword
             ? "Invalid password - Minimum 6 characters are required."
@@ -99,8 +103,8 @@ export const Login = ({ onLogin, onRegister, loading, ...props }) => {
         img={coverImage}
         content={content}
         footer={
-          error !== "" ? (
-            <div className="text-center text-primary">{error}</div>
+          errorMessage !== "" ? (
+            <div className="text-center text-primary">{errorMessage}</div>
           ) : null
         }
       />
@@ -121,10 +125,15 @@ Login.propTypes = {
    * Disables all the inputs an button if true
    */
   loading: PropTypes.bool,
+  /**
+   * Display an error message
+   */
+  error: PropTypes.string,
 };
 
 Login.defaultProps = {
   onLogin: undefined,
   onRegister: undefined,
   loading: false,
+  error: "",
 };
