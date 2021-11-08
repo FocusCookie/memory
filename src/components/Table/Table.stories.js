@@ -25,3 +25,14 @@ Default.args = {
     ["Rick & Morty", "1/2", "33", joinButton],
   ],
 };
+
+export const specialClassname = Template.bind({});
+specialClassname.args = {
+  headers: ["Theme", "# of Players", "# of Pairs", "Join"],
+  rows: [
+    ["Disney", "3/4", "12", joinButton],
+    ["My Little Pony", "1/4", "9", joinButton],
+    ["Rick & Morty", "1/2", "33", joinButton],
+  ],
+  className: "myClass",
+};
