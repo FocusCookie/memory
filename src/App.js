@@ -42,6 +42,12 @@ function App() {
     ) {
       const player = await setPlayer(user);
       setUserPlayer(player);
+    } else {
+      const playerId = onlinePlayers.data.find(
+        (player) => player.uid === user.uid
+      ).id;
+      const player = ref(database, `players/${playerId}`);
+      setUserPlayer(player);
     }
   };
 
