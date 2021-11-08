@@ -27,7 +27,7 @@ function App() {
   const { data: loggedinUser } = useUser();
   const [loadingLogin, setLoadingLogin] = useState(false);
   const [loginError, setLoginError] = useState("");
-  const [userPlayer, setUserPlayer] = useState(null);
+  const [userPlayerRef, setUserPlayerRef] = useState(null);
 
   //TODO ersetzen durch players hook
   const playersListRef = ref(database, "players");
@@ -41,13 +41,13 @@ function App() {
       !onlinePlayers.data.find((player) => player.uid === user.uid)
     ) {
       const player = await setPlayer(user);
-      setUserPlayer(player);
+      setUserPlayerRef(player);
     } else {
       const playerId = onlinePlayers.data.find(
         (player) => player.uid === user.uid
       ).id;
       const player = ref(database, `players/${playerId}`);
-      setUserPlayer(player);
+      setUserPlayerRef(player);
     }
   };
 
@@ -94,7 +94,7 @@ function App() {
 
   const handleLogout = async () => {
     auth.signOut();
-    await remove(userPlayer);
+    await remove(userPlayerRef);
   };
 
   return (
