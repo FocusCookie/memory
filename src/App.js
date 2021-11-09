@@ -50,7 +50,7 @@ function App() {
     <DatabaseProvider sdk={database}>
       <div className="App">
         {user ? (
-          <div className="flex flex-col gap-4 items-center">
+          <div className="flex flex-col  items-center">
             <Menu initiallyOpen={false}>
               <Button
                 label="LOGOUT"

@@ -9,7 +9,7 @@ export function Home({ ...props }) {
   return (
     <div
       {...props}
-      className="flex flex-col gap-8 justify-center items-center  bg-greyscale-offWhite"
+      className="flex flex-col gap-8 justify-center items-center  bg-greyscale-offWhite w-screen h-full"
     >
       <Card>
         <img src={coverImg} alt="Rick and Morty" style={{ width: "27rem" }} />
