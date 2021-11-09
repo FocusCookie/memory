@@ -7,15 +7,15 @@ export const Table = ({ headers, rows, className, ...props }) => {
       <thead>
         <tr>
           {headers.map((header) => (
-            <th>{header}</th>
+            <th key={header}>{header}</th>
           ))}
         </tr>
       </thead>
       <tbody>
-        {rows.map((row) => (
-          <tr>
-            {row.map((cell) => (
-              <td>{cell}</td>
+        {rows.map((row, i) => (
+          <tr key={i}>
+            {row.map((cell, i) => (
+              <td key={i}>{cell}</td>
             ))}
           </tr>
         ))}
