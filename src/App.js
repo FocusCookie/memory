@@ -1,5 +1,5 @@
 import "./styles/App.css";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import {
   getAuth,
@@ -11,13 +11,8 @@ import { Game } from "./views/Game/Game";
 import { Login } from "./components/Login/Login";
 import { Menu } from "./components/Menu/Menu";
 import { Button } from "./components/Button/Button";
-import {
-  useFirebaseApp,
-  DatabaseProvider,
-  useUser,
-  useDatabaseListData,
-} from "reactfire";
-import { getDatabase, ref, remove } from "firebase/database"; // Firebase v9+
+import { useFirebaseApp, DatabaseProvider, useUser } from "reactfire";
+import { getDatabase, remove } from "firebase/database"; // Firebase v9+
 import { setPlayerOnline } from "./services/player.service.mjs";
 
 function App() {
@@ -29,26 +24,26 @@ function App() {
   const [loginError, setLoginError] = useState("");
   const [userPlayerRef, setUserPlayerRef] = useState(null);
 
-  const playersListRef = ref(database, "players");
-  const onlinePlayers = useDatabaseListData(playersListRef, {
-    idField: "id",
-  });
-
   const handleRegister = async (user) => {
     try {
       setLoginError("");
       setLoadingLogin(true);
+
       const registerResponse = await createUserWithEmailAndPassword(
         auth,
         user.email,
         user.password
       );
 
-      setPlayerOnline(onlinePlayers, registerResponse.user, setUserPlayerRef);
+      const player = await setPlayerOnline(registerResponse.user);
+      setUserPlayerRef(player);
+
       setLoadingLogin(false);
     } catch (error) {
       setLoadingLogin(false);
       setLoginError(error.message);
+      console.log(error);
+      console.log(error.message);
     }
   };
 
@@ -63,7 +58,8 @@ function App() {
         user.password
       );
 
-      setPlayerOnline(onlinePlayers, loginResponse.user, setUserPlayerRef);
+      const player = await setPlayerOnline(loginResponse.user);
+      setUserPlayerRef(player);
 
       setLoadingLogin(false);
     } catch (error) {
@@ -78,13 +74,6 @@ function App() {
     auth.signOut();
     await remove(userPlayerRef);
   };
-
-  useEffect(() => {
-    if (loggedinUser) {
-      // in case the browser was closed but the user token and cookie is still set there will be no login again
-      setPlayerOnline(onlinePlayers, loggedinUser, setUserPlayerRef);
-    }
-  }, []);
 
   return (
     <DatabaseProvider sdk={database}>
