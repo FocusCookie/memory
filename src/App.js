@@ -1,16 +1,16 @@
 import "./styles/App.css";
+import { useState, useEffect } from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Home } from "./views/Home/Home";
 import { Game } from "./views/Game/Game";
 import { Login } from "./components/Login/Login";
 import { Menu } from "./components/Menu/Menu";
 import { Button } from "./components/Button/Button";
-import { useState } from "react";
 import {
   useFirebaseApp,
   DatabaseProvider,
@@ -18,7 +18,7 @@ import {
   useDatabaseListData,
 } from "reactfire";
 import { getDatabase, ref, remove } from "firebase/database"; // Firebase v9+
-import { setPlayer } from "./services/player.service.mjs";
+import { setPlayerOnline } from "./services/player.service.mjs";
 
 function App() {
   const app = useFirebaseApp();
@@ -29,27 +29,10 @@ function App() {
   const [loginError, setLoginError] = useState("");
   const [userPlayerRef, setUserPlayerRef] = useState(null);
 
-  //TODO ersetzen durch players hook
   const playersListRef = ref(database, "players");
   const onlinePlayers = useDatabaseListData(playersListRef, {
     idField: "id",
   });
-
-  const setPlayerOnline = async (onlinePlayers, user) => {
-    if (
-      !onlinePlayers.data ||
-      !onlinePlayers.data.find((player) => player.uid === user.uid)
-    ) {
-      const player = await setPlayer(user);
-      setUserPlayerRef(player);
-    } else {
-      const playerId = onlinePlayers.data.find(
-        (player) => player.uid === user.uid
-      ).id;
-      const player = ref(database, `players/${playerId}`);
-      setUserPlayerRef(player);
-    }
-  };
 
   const handleRegister = async (user) => {
     try {
@@ -61,8 +44,7 @@ function App() {
         user.password
       );
 
-      setPlayerOnline(onlinePlayers, registerResponse.user);
-
+      setPlayerOnline(onlinePlayers, registerResponse.user, setUserPlayerRef);
       setLoadingLogin(false);
     } catch (error) {
       setLoadingLogin(false);
@@ -81,7 +63,7 @@ function App() {
         user.password
       );
 
-      setPlayerOnline(onlinePlayers, loginResponse.user);
+      setPlayerOnline(onlinePlayers, loginResponse.user, setUserPlayerRef);
 
       setLoadingLogin(false);
     } catch (error) {
@@ -96,6 +78,13 @@ function App() {
     auth.signOut();
     await remove(userPlayerRef);
   };
+
+  useEffect(() => {
+    if (loggedinUser) {
+      // in case the browser was closed but the user token and cookie is still set there will be no login again
+      setPlayerOnline(onlinePlayers, loggedinUser, setUserPlayerRef);
+    }
+  }, []);
 
   return (
     <DatabaseProvider sdk={database}>
