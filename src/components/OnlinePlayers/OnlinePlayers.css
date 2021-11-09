@@ -1,0 +1,12 @@
+.onlinePlayers {
+  @apply w-full rounded-xl overflow-hidden  filter shadow-md;
+}
+
+.onlinePlayers thead {
+  @apply bg-primary text-white;
+}
+
+.onlinePlayers td,
+.onlinePlayers th {
+  @apply px-2 hover:bg-primary-dark hover:text-white;
+}
