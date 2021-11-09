@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-export const Table = ({ headers, rows, ...props }) => {
+export const Table = ({ headers, rows, className, ...props }) => {
   return (
-    <table className="table" {...props}>
+    <table className={className ? className + " table" : "table"} {...props}>
       <thead>
         <tr>
           {headers.map((header) => (
