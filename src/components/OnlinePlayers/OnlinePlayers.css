@@ -1,9 +1,10 @@
 .onlinePlayers {
-  @apply w-full rounded-xl overflow-hidden  filter shadow-md;
+  max-height: 80vh;
+  @apply w-full relative rounded-xl overflow-hidden filter shadow-md overflow-y-auto;
 }
 
-.onlinePlayers thead {
-  @apply bg-primary text-white;
+.onlinePlayers th {
+  @apply bg-primary text-white rounded-tl-xl rounded-tr-xl sticky top-0;
 }
 
 .onlinePlayers td,

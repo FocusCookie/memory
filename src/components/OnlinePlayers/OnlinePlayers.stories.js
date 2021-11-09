@@ -10,4 +10,19 @@ export default {
 const Template = (args) => <OnlinePlayers {...args} />;
 
 export const Default = Template.bind({});
-Default.args = { players: ["Batman 🦇", "Spongebob", "Rick"] };
+Default.args = {
+  players: [
+    "Batman 🦇",
+    "Spongebob",
+    "Rick",
+    "Batman 🦇",
+    "Spongebob",
+    "Rick",
+    "Batman 🦇",
+    "Spongebob",
+    "Rick",
+    "Batman 🦇",
+    "Spongebob",
+    "Rick",
+  ],
+};
