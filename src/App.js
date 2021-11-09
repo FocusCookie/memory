@@ -1,20 +1,19 @@
 import "./styles/App.css";
 import { useState } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import {
-  getAuth,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-} from "firebase/auth";
+import { getAuth } from "firebase/auth";
 import { Home } from "./views/Home/Home";
 import { Game } from "./views/Game/Game";
 import { Login } from "./components/Login/Login";
 import { Menu } from "./components/Menu/Menu";
 import { Button } from "./components/Button/Button";
 import { useFirebaseApp, DatabaseProvider, useUser } from "reactfire";
-import { getDatabase, remove } from "firebase/database"; // Firebase v9+
-import { setPlayerOnline } from "./services/player.service.mjs";
-
+import { getDatabase } from "firebase/database"; // Firebase v9+
+import {
+  setPlayerOnline,
+  removePlayerOnline,
+} from "./services/player.service.mjs";
+import { register, login, logout } from "./services/auth.service.mjs";
 function App() {
   const app = useFirebaseApp();
   const database = getDatabase(app);
@@ -22,22 +21,12 @@ function App() {
   const { data: loggedinUser } = useUser();
   const [loadingLogin, setLoadingLogin] = useState(false);
   const [loginError, setLoginError] = useState("");
-  const [userPlayerRef, setUserPlayerRef] = useState(null);
 
   const handleRegister = async (user) => {
     try {
       setLoginError("");
       setLoadingLogin(true);
-
-      const registerResponse = await createUserWithEmailAndPassword(
-        auth,
-        user.email,
-        user.password
-      );
-
-      const player = await setPlayerOnline(registerResponse.user);
-      setUserPlayerRef(player);
-
+      await register(auth, user);
       setLoadingLogin(false);
     } catch (error) {
       setLoadingLogin(false);
@@ -51,16 +40,7 @@ function App() {
     try {
       setLoginError("");
       setLoadingLogin(true);
-
-      const loginResponse = await signInWithEmailAndPassword(
-        auth,
-        user.email,
-        user.password
-      );
-
-      const player = await setPlayerOnline(loginResponse.user);
-      setUserPlayerRef(player);
-
+      await login(auth, user);
       setLoadingLogin(false);
     } catch (error) {
       setLoadingLogin(false);
@@ -71,8 +51,7 @@ function App() {
   };
 
   const handleLogout = async () => {
-    auth.signOut();
-    await remove(userPlayerRef);
+    await logout(auth, loggedinUser);
   };
 
   return (
