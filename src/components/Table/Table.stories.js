@@ -36,3 +36,55 @@ specialClassname.args = {
   ],
   className: "myClass",
 };
+
+export const TableCard = Template.bind({});
+TableCard.args = {
+  headers: ["Theme", "# of Players", "# of Pairs", "Join"],
+  rows: [
+    ["Disney", "3/4", "12", joinButton],
+    ["My Little Pony", "1/4", "9", joinButton],
+    ["Rick & Morty", "1/2", "33", joinButton],
+  ],
+  card: true,
+};
+
+export const TableScrollable = Template.bind({});
+TableScrollable.args = {
+  headers: ["Theme", "# of Players", "# of Pairs", "Join"],
+  rows: [
+    ["Disney", "3/4", "12", joinButton],
+    ["My Little Pony", "1/4", "9", joinButton],
+    ["Rick & Morty", "1/2", "33", joinButton],
+    ["Disney", "3/4", "12", joinButton],
+    ["My Little Pony", "1/4", "9", joinButton],
+    ["Rick & Morty", "1/2", "33", joinButton],
+    ["Disney", "3/4", "12", joinButton],
+    ["My Little Pony", "1/4", "9", joinButton],
+    ["Rick & Morty", "1/2", "33", joinButton],
+    ["Disney", "3/4", "12", joinButton],
+    ["My Little Pony", "1/4", "9", joinButton],
+    ["Rick & Morty", "1/2", "33", joinButton],
+  ],
+  scrollable: true,
+};
+
+export const TableScrollableCard = Template.bind({});
+TableScrollableCard.args = {
+  headers: ["Theme", "# of Players", "# of Pairs", "Join"],
+  rows: [
+    ["Disney", "3/4", "12", joinButton],
+    ["My Little Pony", "1/4", "9", joinButton],
+    ["Rick & Morty", "1/2", "33", joinButton],
+    ["Disney", "3/4", "12", joinButton],
+    ["My Little Pony", "1/4", "9", joinButton],
+    ["Rick & Morty", "1/2", "33", joinButton],
+    ["Disney", "3/4", "12", joinButton],
+    ["My Little Pony", "1/4", "9", joinButton],
+    ["Rick & Morty", "1/2", "33", joinButton],
+    ["Disney", "3/4", "12", joinButton],
+    ["My Little Pony", "1/4", "9", joinButton],
+    ["Rick & Morty", "1/2", "33", joinButton],
+  ],
+  card: true,
+  scrollable: true,
+};
