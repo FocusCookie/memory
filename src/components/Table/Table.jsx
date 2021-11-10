@@ -14,16 +14,16 @@ export const Table = ({
     <table className={className ? "table " + className : "table"} {...props}>
       <thead>
         <tr>
-          {headers.map((header, headerIndex) => (
-            <th key={`th-${headerIndex}-${Math.random()}`}>{header}</th>
+          {headers.map((header) => (
+            <th key={header}>{header}</th>
           ))}
         </tr>
       </thead>
       <tbody>
-        {rows.map((row, rowIndex) => (
-          <tr key={`tr-${rowIndex}-${Math.random()}`}>
-            {row.map((cell, tdIndex) => (
-              <td key={`td-${tdIndex}-${Math.random()}`}>{cell}</td>
+        {rows.map((row, i) => (
+          <tr key={i}>
+            {row.map((cell, i) => (
+              <td key={i}>{cell}</td>
             ))}
           </tr>
         ))}
