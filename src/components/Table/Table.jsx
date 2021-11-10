@@ -1,8 +1,16 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { Card } from "../Card/Card";
 
-export const Table = ({ headers, rows, className, ...props }) => {
-  return (
+export const Table = ({
+  headers,
+  rows,
+  card,
+  scrollable,
+  className,
+  ...props
+}) => {
+  let table = (
     <table className={className ? "table " + className : "table"} {...props}>
       <thead>
         <tr>
@@ -22,6 +30,9 @@ export const Table = ({ headers, rows, className, ...props }) => {
       </tbody>
     </table>
   );
+  if (scrollable) table = <div className="scrollable">{table}</div>;
+  if (card) table = <Card>{table}</Card>;
+  return table;
 };
 
 Table.propTypes = {
@@ -33,4 +44,17 @@ Table.propTypes = {
    * Rows
    */
   rows: PropTypes.arrayOf(PropTypes.array),
+  /**
+   * Should the table be rendered as a card?
+   */
+  card: PropTypes.bool,
+  /**
+   * Should the table be scrollable?
+   */
+  scrollable: PropTypes.bool,
+};
+
+Table.defaultProps = {
+  card: false,
+  scrollable: false,
 };

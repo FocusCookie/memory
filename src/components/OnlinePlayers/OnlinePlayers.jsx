@@ -7,9 +7,13 @@ export function OnlinePlayers({ players, ...props }) {
   const rows = players.sort().map((player) => [player]);
 
   return (
-    <div className="onlinePlayers">
-      <Table className="w-full" headers={headers} rows={rows} {...props} />
-    </div>
+    <Table
+      headers={headers}
+      rows={rows}
+      scrollable={true}
+      card={true}
+      {...props}
+    />
   );
 }
 
