@@ -14,9 +14,9 @@ export const TableGames = ({ ...props }) => {
   if (status === "error") return <div>Oops, something went wrong 👻</div>;
   if (status === "loading") return <div>loading...</div>;
 
-  const headers = ["Status", "Theme", "# of Players", "# of Pairs", "Join"];
+  const headers = ["Theme", "# of Players", "# of Pairs", "Action"];
   const rows = data.map(
-    ({ id, state, theme, maxNumberOfPlayers, players, numberOfPairs }) => [
+    ({ theme, maxNumberOfPlayers, players, numberOfPairs }) => [
       state,
       theme,
       `${players?.length}/${maxNumberOfPlayers}`,
@@ -28,7 +28,9 @@ export const TableGames = ({ ...props }) => {
       />,
     ]
   );
-  return <Table {...{ headers, rows, ...props }} />;
+  return (
+    <Table scrollable={true} card={true} {...{ headers, rows, ...props }} />
+  );
 };
 
 TableGames.propTypes = {};
