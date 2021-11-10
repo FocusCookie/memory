@@ -2,9 +2,17 @@ import React from "react";
 import { useHistory } from "react-router";
 import { Button } from "../../components/Button/Button";
 import { Menu } from "../../components/Menu/Menu";
+import { OnlinePlayers } from "../../components/OnlinePlayers/OnlinePlayers";
+import { useDatabaseListData, useDatabase } from "reactfire";
+import { ref } from "firebase/database";
 
 export function Online({ ...props }) {
   const history = useHistory();
+  const database = useDatabase();
+  const onlinePlayersListRef = ref(database, "onlinePlayers");
+  const { data: onlinePlayers } = useDatabaseListData(onlinePlayersListRef, {
+    idField: "id",
+  });
 
   return (
     <div
@@ -22,7 +30,9 @@ export function Online({ ...props }) {
       </div>
       <div className="p-4 h-full w-full flex flex-row gap-4 justify-center">
         <div>
-          <h1>Online Players</h1>
+          <OnlinePlayers
+            players={onlinePlayers.map((player) => player.username)}
+          />
         </div>
         <div className="flex flex-col gap-4">
           <div>
