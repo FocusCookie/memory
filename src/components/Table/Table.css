@@ -18,6 +18,10 @@
 .table td {
   @apply py-2;
 }
+.table tr:hover,
+.table tr:nth-child(2n):hover {
+  @apply bg-primary text-white;
+}
 
 .table tr:nth-child(2n) {
   @apply bg-greyscale-background;
