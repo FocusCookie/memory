@@ -7,12 +7,10 @@ export const IncrementStepper = ({
   max,
   initialValue,
   label,
-  onClick,
+  onChange,
   ...props
 }) => {
   const [value, setValue] = useState(initialValue);
-  console.log("rerendering component");
-  console.log("current value is: ", value);
 
   const onIncrease = useCallback(() => {
     setValue(Math.min(value + 1, max));
@@ -23,18 +21,18 @@ export const IncrementStepper = ({
   }, [value]);
 
   useEffect(() => {
-    onClick(value);
+    onChange(value);
   }, [value]);
 
   return (
     <div className="incrementStepper" {...props}>
-      <div className="incrementStepper-label">{label}</div>
-      <div className="incrementStepper-controls">
-        <button className="incrementstepper-control" onClick={onDecrease}>
+      <div className="incrementStepper__label">{label}</div>
+      <div className="incrementStepper__controls">
+        <button className="incrementStepper__control" onClick={onDecrease}>
           <HiMinusSm />
         </button>
-        <div className="incrementstepper-value">{value}</div>
-        <button className="incrementstepper-control" onClick={onIncrease}>
+        <div className="incrementStepper__value">{value}</div>
+        <button className="incrementStepper__control" onClick={onIncrease}>
           <HiPlusSm />
         </button>
       </div>
@@ -62,7 +60,7 @@ IncrementStepper.propTypes = {
   /**
    * Lower value bound
    */
-  onClick: PropTypes.func,
+  onChange: PropTypes.func,
 };
 
 IncrementStepper.defaultProps = {

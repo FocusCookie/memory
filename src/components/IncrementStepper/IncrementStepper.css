@@ -1,15 +1,15 @@
-.incrementStepper-label {
+.incrementStepper__label {
   @apply font-bold text-greyscale-label mb-2;
 }
 
-.incrementStepper-controls {
+.incrementStepper__controls {
   @apply flex justify-between items-center;
 }
 
-.incrementstepper-control {
+.incrementStepper__control {
   @apply bg-greyscale-inputBackground w-8 h-8 rounded-full flex items-center justify-center;
 }
 
-.incrementstepper-value {
+.incrementStepper__value {
   @apply font-semibold;
 }
