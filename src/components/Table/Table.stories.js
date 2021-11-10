@@ -48,6 +48,21 @@ TableCard.args = {
   card: true,
 };
 
+export const TableCardHighlight = Template.bind({});
+TableCardHighlight.args = {
+  headers: ["Theme", "# of Players", "# of Pairs", "Join"],
+  rows: [
+    ["Disney", "3/4", "12", joinButton],
+    ["My Little Pony", "1/4", "9", joinButton],
+    ["Rick & Morty", "1/2", "33", joinButton],
+    ["Disney", "3/4", "12", joinButton],
+    ["My Little Pony", "1/4", "9", joinButton],
+    ["Rick & Morty", "1/2", "33", joinButton],
+  ],
+  card: true,
+  highlight: 2,
+};
+
 export const TableScrollable = Template.bind({});
 TableScrollable.args = {
   headers: ["Theme", "# of Players", "# of Pairs", "Join"],

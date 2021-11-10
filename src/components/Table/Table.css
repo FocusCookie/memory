@@ -26,3 +26,7 @@
 .table tr:nth-child(2n) {
   @apply bg-greyscale-background;
 }
+
+.table tr.table-row--highlight {
+  @apply bg-primary-light;
+}

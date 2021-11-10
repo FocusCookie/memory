@@ -8,6 +8,7 @@ export const Table = ({
   card,
   scrollable,
   className,
+  highlight,
   ...props
 }) => {
   let table = (
@@ -21,7 +22,10 @@ export const Table = ({
       </thead>
       <tbody>
         {rows.map((row, i) => (
-          <tr key={i}>
+          <tr
+            key={i}
+            className={i + 1 === highlight ? "table-row--highlight" : ""}
+          >
             {row.map((cell, i) => (
               <td key={i}>{cell}</td>
             ))}
@@ -52,9 +56,14 @@ Table.propTypes = {
    * Should the table be scrollable?
    */
   scrollable: PropTypes.bool,
+  /**
+   * A row to highlight, indexed by 1
+   */
+  highlight: PropTypes.number,
 };
 
 Table.defaultProps = {
   card: false,
   scrollable: false,
+  highlight: false,
 };
