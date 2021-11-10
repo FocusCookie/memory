@@ -3,8 +3,10 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { setPlayerOnline, removePlayerOnline } from "./player.service.mjs";
+import { getAuth } from "firebase/auth";
 
-export const register = async (auth, user) => {
+export const register = async (user) => {
+  const auth = getAuth();
   const registerResponse = await createUserWithEmailAndPassword(
     auth,
     user.email,
@@ -14,7 +16,8 @@ export const register = async (auth, user) => {
   await setPlayerOnline(registerResponse.user);
 };
 
-export const login = async (auth, user) => {
+export const login = async (user) => {
+  const auth = getAuth();
   const loginResponse = await signInWithEmailAndPassword(
     auth,
     user.email,
@@ -24,7 +27,8 @@ export const login = async (auth, user) => {
   await setPlayerOnline(loginResponse.user);
 };
 
-export const logout = async (auth, user) => {
+export const logout = async () => {
+  const auth = getAuth();
   auth.signOut();
-  await removePlayerOnline(user);
+  await removePlayerOnline(auth.currentUser);
 };

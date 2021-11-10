@@ -1,11 +1,13 @@
 import React from "react";
 import { Card } from "../../components/Card/Card";
 import { Button } from "../../components/Button/Button";
+import { Menu } from "../../components/Menu/Menu";
 import { useHistory } from "react-router-dom";
 import coverImg from "../../assets/Cover.jpg";
 
 export function Home({ ...props }) {
   const history = useHistory();
+
   return (
     <div
       {...props}
@@ -20,12 +22,20 @@ export function Home({ ...props }) {
           >
             rick & morty memory
           </h1>
-          <Button
-            label="PLAY A GAME"
-            onClick={() => {
-              history.push("/game");
-            }}
-          />
+          <div className="flex flex-row gap-4 justify-evenly">
+            <Button
+              label="PLAY ALONE"
+              onClick={() => {
+                history.push("/offline");
+              }}
+            />
+            <Button
+              label="PLAY ONLINE"
+              onClick={() => {
+                history.push("/online");
+              }}
+            />
+          </div>
         </div>
       </Card>
 

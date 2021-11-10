@@ -7,7 +7,7 @@ import { CardHiCF } from "../../components/CardHiCF/CardHiCF";
 import { getCards } from "../../services/game.service";
 import cover from "../../assets/Cover.jpg";
 
-export function Game({ ...props }) {
+export function OfflineGame({ ...props }) {
   useEffect(() => {
     async function fetchCards() {
       const cards = await getCards("rickmorty", 2);
