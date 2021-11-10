@@ -7,7 +7,7 @@
 }
 
 .menu__outer {
-  @apply w-full flex justify-center overflow-hidden px-4;
+  @apply w-screen flex justify-center overflow-hidden px-4 bg-greyscale-offWhite;
 }
 
 .menu__outer > * {
