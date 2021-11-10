@@ -1,11 +1,11 @@
 import { React, useCallback, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 
-export const Dropdown = ({ label, elements, onClick, ...props }) => {
+export const Dropdown = ({ label, elements, onChange, ...props }) => {
   const [value, setValue] = useState(elements?.[0]);
 
   useEffect(() => {
-    onClick(value);
+    onChange(value);
   }, [value]);
 
   const handleChange = useCallback(
@@ -16,12 +16,12 @@ export const Dropdown = ({ label, elements, onClick, ...props }) => {
   );
 
   return (
-    <div className="dropdown">
-      <label htmlFor={label} className="dropdown-label">
+    <div className="dropdown" {...props}>
+      <label htmlFor={label} className="dropdown__label">
         {label}
       </label>
       <select
-        className="dropdown-select"
+        className="dropdown__select"
         name={label}
         id={label + "-select"}
         value={value}
@@ -49,7 +49,7 @@ Dropdown.propTypes = {
   /**
    * Callback Function that receives the currently selected option as a string
    */
-  onClick: PropTypes.func,
+  onChange: PropTypes.func,
 };
 
 Dropdown.defaultProps = {};
