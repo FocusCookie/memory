@@ -23,7 +23,7 @@ export function OnlinePlayers({ ...props }) {
     return <div>Oops, something went wrong 👻</div>;
   if (onlinePlayerStatus === "loading")
     return (
-      <div className="flex flex-col gap-4">
+      <div>
         <Spinner size="5rem" />
       </div>
     );
