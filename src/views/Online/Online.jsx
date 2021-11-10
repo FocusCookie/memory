@@ -2,6 +2,7 @@ import React from "react";
 import { useHistory } from "react-router";
 import { Button } from "../../components/Button/Button";
 import { Menu } from "../../components/Menu/Menu";
+import { OnlinePlayers } from "../../components/OnlinePlayers/OnlinePlayers";
 
 export function Online({ ...props }) {
   const history = useHistory();
@@ -22,7 +23,7 @@ export function Online({ ...props }) {
       </div>
       <div className="p-4 h-full w-full flex flex-row gap-4 justify-center">
         <div>
-          <h1>Online Players</h1>
+          <OnlinePlayers />
         </div>
         <div className="flex flex-col gap-4">
           <div>
