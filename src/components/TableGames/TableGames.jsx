@@ -1,9 +1,9 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { useGames } from "../../hooks/useGames";
 import { Table } from "../Table/Table";
 import { Button } from "../Button/Button";
 
+// TODO: replace with proper function
 const joinGameOnline = (id) => {
   console.log("Joined Game:", id);
 };
@@ -16,8 +16,7 @@ export const TableGames = ({ ...props }) => {
 
   const headers = ["Theme", "# of Players", "# of Pairs", "Action"];
   const rows = data.map(
-    ({ theme, maxNumberOfPlayers, players, numberOfPairs }) => [
-      state,
+    ({ id, theme, maxNumberOfPlayers, players, numberOfPairs }) => [
       theme,
       `${players?.length}/${maxNumberOfPlayers}`,
       numberOfPairs,
@@ -32,5 +31,3 @@ export const TableGames = ({ ...props }) => {
     <Table scrollable={true} card={true} {...{ headers, rows, ...props }} />
   );
 };
-
-TableGames.propTypes = {};
