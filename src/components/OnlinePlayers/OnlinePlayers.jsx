@@ -21,12 +21,7 @@ export function OnlinePlayers({ ...props }) {
 
   if (onlinePlayerStatus === "error")
     return <div>Oops, something went wrong 👻</div>;
-  if (onlinePlayerStatus === "loading")
-    return (
-      <div>
-        <Spinner size="5rem" />
-      </div>
-    );
+  if (onlinePlayerStatus === "loading") return <Spinner size="5rem" />;
 
   return (
     <Table
