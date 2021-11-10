@@ -2,6 +2,7 @@ import React from "react";
 import { useGames } from "../../hooks/useGames";
 import { Table } from "../Table/Table";
 import { Button } from "../Button/Button";
+import { Spinner } from "../Spinner/Spinner";
 
 // TODO: replace with proper function
 const joinGameOnline = (id) => {
@@ -12,7 +13,12 @@ export const TableGames = ({ ...props }) => {
   const { status, data } = useGames();
 
   if (status === "error") return <div>Oops, something went wrong 👻</div>;
-  if (status === "loading") return <div>loading...</div>;
+  if (status === "loading")
+    return (
+      <div>
+        <Spinner size="5rem" />
+      </div>
+    );
 
   const headers = ["Theme", "# of Players", "# of Pairs", "Action"];
   const rows = data.map(
