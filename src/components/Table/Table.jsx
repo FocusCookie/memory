@@ -3,19 +3,19 @@ import PropTypes from "prop-types";
 
 export const Table = ({ headers, rows, className, ...props }) => {
   return (
-    <table className={className ? className + " table" : "table"} {...props}>
+    <table className={className ? "table " + className : "table"} {...props}>
       <thead>
         <tr>
-          {headers.map((header) => (
-            <th>{header}</th>
+          {headers.map((header, headerIndex) => (
+            <th key={`th-${headerIndex}-${Math.random()}`}>{header}</th>
           ))}
         </tr>
       </thead>
       <tbody>
-        {rows.map((row) => (
-          <tr>
-            {row.map((cell) => (
-              <td>{cell}</td>
+        {rows.map((row, rowIndex) => (
+          <tr key={`tr-${rowIndex}-${Math.random()}`}>
+            {row.map((cell, tdIndex) => (
+              <td key={`td-${tdIndex}-${Math.random()}`}>{cell}</td>
             ))}
           </tr>
         ))}

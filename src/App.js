@@ -9,10 +9,6 @@ import { Menu } from "./components/Menu/Menu";
 import { Button } from "./components/Button/Button";
 import { useFirebaseApp, DatabaseProvider, useUser } from "reactfire";
 import { getDatabase } from "firebase/database"; // Firebase v9+
-import {
-  setPlayerOnline,
-  removePlayerOnline,
-} from "./services/player.service.mjs";
 import { register, login, logout } from "./services/auth.service.mjs";
 function App() {
   const app = useFirebaseApp();
