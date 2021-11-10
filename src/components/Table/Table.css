@@ -1,0 +1,8 @@
+.table td,
+.table th {
+  @apply px-5 py-1 text-left;
+}
+
+.table tr:nth-child(2n) {
+  @apply bg-primary-light;
+}
