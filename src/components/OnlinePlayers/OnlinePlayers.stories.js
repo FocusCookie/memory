@@ -1,10 +1,11 @@
 import React from "react";
 import { OnlinePlayers } from "./OnlinePlayers";
+import { dbProvider } from "../../../.storybook/decorators";
 
 export default {
   title: "RickAndMorty/OnlinePlayers",
   component: OnlinePlayers,
-  argTypes: {},
+  decorators: [dbProvider],
 };
 
 const Template = (args) => <OnlinePlayers {...args} />;
