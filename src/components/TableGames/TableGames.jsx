@@ -13,12 +13,7 @@ export const TableGames = ({ ...props }) => {
   const { status, data } = useGames();
 
   if (status === "error") return <div>Oops, something went wrong 👻</div>;
-  if (status === "loading")
-    return (
-      <div>
-        <Spinner size="5rem" />
-      </div>
-    );
+  if (status === "loading") return <Spinner size="5rem" />;
 
   const headers = ["Theme", "# of Players", "# of Pairs", "Action"];
   const rows = data.map(
