@@ -2,12 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import { Gameboard } from "../../components/Gameboard/Gameboard";
 import { Modal } from "../../components/Modal/Modal";
+import { Menu } from "../../components/Menu/Menu";
 import { Button } from "../../components/Button/Button";
 import { CardHiCF } from "../../components/CardHiCF/CardHiCF";
 import { getCards } from "../../services/game.service";
 import cover from "../../assets/Cover.jpg";
 
-export function OfflineGame({ ...props }) {
+export function Offline({ ...props }) {
   useEffect(() => {
     async function fetchCards() {
       const cards = await getCards("rickmorty", 2);
@@ -70,17 +71,19 @@ export function OfflineGame({ ...props }) {
   return (
     <div
       {...props}
-      className="flex flex-col justify-center items-center  w-screen"
+      className="bg-greyscale-offWhite flex flex-col justify-center items-center h-full w-screen"
     >
       <div className="flex flex-row justify-center gap-4">
-        <Button
-          label="CANCEL GAME"
-          variant="secondary"
-          onClick={() => history.push("/")}
-        />
-        <Button label="RESET GAME" onClick={() => resetGame()} />
+        <Menu initiallyOpen={false}>
+          <Button
+            label="CANCEL GAME"
+            variant="secondary"
+            onClick={() => history.push("/")}
+          />
+          <Button label="RESET GAME" onClick={() => resetGame()} />
+        </Menu>
       </div>
-      <div className="p-10">
+      <div className="p-10 h-full">
         {!loading ? (
           <>
             <Gameboard

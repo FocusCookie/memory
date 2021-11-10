@@ -2,12 +2,14 @@ import "./styles/App.css";
 import { useState } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Home } from "./views/Home/Home";
-import { OfflineGame } from "./views/OfflineGame/OfflineGame";
-import { OnlineGame } from "./views/OnlineGame/OnlineGame";
+import { Offline } from "./views/Offline/Offline";
+import { Online } from "./views/Online/Online";
+import { OnlineGameView } from "./views/Online/OnlineGameView";
+import { OnlineCreateGame } from "./views/Online/OnlineCreateGame";
 import { Login } from "./components/Login/Login";
 import { useFirebaseApp, DatabaseProvider, useUser } from "reactfire";
 import { getDatabase } from "firebase/database"; // Firebase v9+
-import { register, login, logout } from "./services/auth.service.mjs";
+import { register, login } from "./services/auth.service.mjs";
 
 function App() {
   const app = useFirebaseApp();
@@ -44,10 +46,6 @@ function App() {
     }
   };
 
-  const handleLogout = async () => {
-    await logout();
-  };
-
   return (
     <DatabaseProvider sdk={database}>
       <div className="App">
@@ -59,10 +57,16 @@ function App() {
                   <Home />
                 </Route>
                 <Route path="/offline">
-                  <OfflineGame />
+                  <Offline />
                 </Route>
-                <Route path="/online">
-                  <OnlineGame />
+                <Route exact path="/online">
+                  <Online />
+                </Route>
+                <Route exact path="/online/games/create">
+                  <OnlineCreateGame />
+                </Route>
+                <Route path="/online/games/:gameId">
+                  <OnlineGameView />
                 </Route>
               </Switch>
             </Router>

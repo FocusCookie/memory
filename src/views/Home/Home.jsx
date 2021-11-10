@@ -16,7 +16,7 @@ export function Home({ ...props }) {
   return (
     <div
       {...props}
-      className="flex flex-col gap-8 justify-center items-center  bg-greyscale-offWhite w-screen h-full"
+      className="flex flex-col gap-8 justify-start items-center  bg-greyscale-offWhite w-screen h-full"
     >
       <Menu initiallyOpen={false}>
         <Button
