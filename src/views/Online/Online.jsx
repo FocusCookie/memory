@@ -3,6 +3,7 @@ import { useHistory } from "react-router";
 import { Button } from "../../components/Button/Button";
 import { Menu } from "../../components/Menu/Menu";
 import { OnlinePlayers } from "../../components/OnlinePlayers/OnlinePlayers";
+import { TableGames } from "../../components/TableGames/TableGames";
 
 export function Online({ ...props }) {
   const history = useHistory();
@@ -15,7 +16,7 @@ export function Online({ ...props }) {
       <div className="flex flex-row justify-center gap-4">
         <Menu initiallyOpen={false}>
           <Button
-            label="CANCEL GAME"
+            label="HOME"
             variant="secondary"
             onClick={() => history.push("/")}
           />
@@ -25,14 +26,9 @@ export function Online({ ...props }) {
         <div>
           <OnlinePlayers />
         </div>
-        <div className="flex flex-col gap-4">
-          <div>
-            <h1>Lobbies</h1>
-            <Button
-              label="JOIN GAME"
-              variant="secondary"
-              onClick={() => history.push("/online/games/1234")}
-            />
+        <div className="flex flex-col items-end gap-4 w-full">
+          <div className="self-stretch">
+            <TableGames />
           </div>
 
           <div>
