@@ -16,7 +16,7 @@ module.exports = {
           offWhite: "var(--color--greyscale-offWhite)",
           inputBackground: "var(--color--greyscale-inputBackground)",
           background: "var(--color--greyscale-background)",
-          placeholder: "var(--color--greyscale-)",
+          placeholder: "var(--color--greyscale-placeholder)",
           label: "var(--color--greyscale-label)",
           body: "var(--color--greyscale-body)",
           titleActive: "var(--color--greyscale-titleActive)",

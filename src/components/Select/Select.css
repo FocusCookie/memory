@@ -1,0 +1,55 @@
+.select {
+  @apply flex flex-row gap-4 justify-between;
+}
+
+.select__control {
+  @apply flex flex-row gap-4 text-xl text-greyscale-titleActive items-center;
+}
+
+.select input[type="radio"] {
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: var(--color--greyscale-line);
+  border: 0.5rem solid var(--color--greyscale-line);
+  margin: 0;
+  font: inherit;
+  color: var(--color--greyscale-line);
+  width: 2rem;
+  height: 2rem;
+  border: 0.15rem solid currentColor;
+  border-radius: 50%;
+  display: grid;
+  place-content: center;
+}
+
+.select__control input[type="radio"]:disabled {
+  @apply border-primary-light;
+}
+.select__control input[type="radio"]:focus {
+  @apply focus:outline-none focus:ring-8 focus:ring-primary-light;
+}
+.select__control input[type="radio"]:hover {
+  background-color: var(--color--greyscale-placeholder);
+  border-color: var(--color--greyscale-placeholder);
+}
+.select__control input[type="radio"]:checked:hover {
+  border: 0.5rem solid var(--color--primary-dark);
+}
+
+.select__control input[type="radio"]::before {
+  content: "";
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  transform: scale(0);
+  transition: 300ms all ease-in-out;
+  border: 0.5rem solid var(--color--primary);
+}
+
+.select__control input[type="radio"]:checked::before {
+  transform: scale(1);
+}
+
+.select__control--disabled input[type="radio"] {
+  @apply opacity-50;
+}
