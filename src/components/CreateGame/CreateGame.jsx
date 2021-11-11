@@ -8,10 +8,10 @@ import { IncrementStepper } from "../IncrementStepper/IncrementStepper";
 import { Card } from "../Card/Card";
 import { getAuth } from "firebase/auth";
 
-const themes = ["Rock & Morty", "Disney", "Amiibos"];
+const themes = ["Rick & Morty", "Disney", "Amiibos"];
 
 export const CreateGame = ({ initMaxPlayers, initNrOfPairs, ...props }) => {
-  const [theme, setTheme] = useState("");
+  const [theme, setTheme] = useState(themes[0]);
   const [maxPlayers, setMaxPlayers] = useState(initMaxPlayers);
   const [nrOfPairs, setNrOfPairs] = useState(initNrOfPairs);
   const history = useHistory();
@@ -30,10 +30,12 @@ export const CreateGame = ({ initMaxPlayers, initNrOfPairs, ...props }) => {
           <IncrementStepper
             label="PLAYERS"
             onChange={(value) => setMaxPlayers(value)}
+            min={2}
           />
           <IncrementStepper
             label="CARD PAIRS"
             onChange={(value) => setNrOfPairs(value)}
+            min={1}
           />
         </div>
       </Card>

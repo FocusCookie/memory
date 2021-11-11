@@ -9,4 +9,7 @@ export default {
 const Template = (args) => <CreateGame {...args} />;
 
 export const Default = Template.bind({});
-Default.args = {};
+Default.args = {
+  initMaxPlayers: 2,
+  initNrOfPairs: 8,
+};
