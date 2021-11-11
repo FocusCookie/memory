@@ -16,14 +16,7 @@ export const register = async (user) => {
 
   updateProfile(registerResponse.user, {
     displayName: user.email.slice(0, user.email.indexOf("@")),
-  })
-    .then(() => {
-      console.log("displayName successfully set");
-    })
-    .catch((error) => {
-      console.log("Error: could not set displayName");
-      console.log(error);
-    });
+  });
 
   await setPlayerOnline(registerResponse.user);
 };
