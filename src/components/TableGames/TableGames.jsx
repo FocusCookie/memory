@@ -29,8 +29,11 @@ export const TableGames = ({ ...props }) => {
 
   const headers = ["Theme", "# of Players", "# of Pairs", "Action"];
   const rows = data
-    .filter(({ maxPlayers, players }) => gameIsNotFull(maxPlayers, players))
-    .map(({ id, theme, maxPlayers, players, numberOfPairs }) => [
+    .filter(
+      ({ maxPlayers, players, state }) =>
+        gameIsNotFull(maxPlayers, players) && state === "waiting"
+    )
+    .map(({ id, theme, maxPlayers, players, numberOfPairs, state }) => [
       theme,
       `${Object.keys(players).length}/${maxPlayers}`,
       numberOfPairs,
