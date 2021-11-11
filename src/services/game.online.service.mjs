@@ -26,7 +26,6 @@ export const createGameOnline = async ({
   const gamesListRef = ref(database, "games");
   const gameRef = push(gamesListRef);
   set(gameRef, game);
-  console.log(gameRef);
   return gameRef;
 };
 
