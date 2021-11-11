@@ -16,7 +16,7 @@ export function Online({ ...props }) {
       <div className="flex flex-row justify-center gap-4">
         <Menu initiallyOpen={false}>
           <Button
-            label="CANCEL GAME"
+            label="HOME"
             variant="secondary"
             onClick={() => history.push("/")}
           />
