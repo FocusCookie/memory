@@ -1,6 +1,7 @@
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  updateProfile,
 } from "firebase/auth";
 import { setPlayerOnline, removePlayerOnline } from "./player.service.mjs";
 import { getAuth } from "firebase/auth";
@@ -12,6 +13,10 @@ export const register = async (user) => {
     user.email,
     user.password
   );
+
+  updateProfile(registerResponse.user, {
+    displayName: user.email.slice(0, user.email.indexOf("@")),
+  });
 
   await setPlayerOnline(registerResponse.user);
 };

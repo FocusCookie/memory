@@ -10,7 +10,7 @@ export const IncrementStepper = ({
   onChange,
   ...props
 }) => {
-  const [value, setValue] = useState(initialValue);
+  const [value, setValue] = useState(initialValue > min ? initialValue : min);
 
   const onIncrease = useCallback(() => {
     setValue(Math.min(value + 1, max));
