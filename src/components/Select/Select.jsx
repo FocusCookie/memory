@@ -19,19 +19,21 @@ export const Select = ({ labels, onChange, init, disabled, ...props }) => {
         <input
           type="radio"
           name="radio"
-          onClick={() => handleChange(false)}
+          onChange={() => handleChange(false)}
           checked={!checked}
         />
         <span>{labels.off}</span>
       </label>
       <label
-        class={`select__control ${disabled ? "select__control--disabled" : ""}`}
+        className={`select__control ${
+          disabled ? "select__control--disabled" : ""
+        }`}
       >
         <span>{labels.on}</span>
         <input
           type="radio"
           name="radio"
-          onClick={() => handleChange(true)}
+          onChange={() => handleChange(true)}
           checked={checked}
         />
       </label>

@@ -31,7 +31,7 @@ export function Online({ ...props }) {
             <Button
               label="JOIN GAME"
               variant="secondary"
-              onClick={() => history.push("/online/games/1234")}
+              onClick={() => history.push("/online/games/-MoDoPDWPDZ-TbPswXcu")}
             />
           </div>
 
