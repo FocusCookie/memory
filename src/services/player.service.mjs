@@ -18,3 +18,14 @@ export const removePlayerOnline = async (user) => {
   const playerRef = child(playersListRef, user.uid);
   await remove(playerRef);
 };
+
+export const getPlayerStatusProperty = (status) => {
+  if (status) return "success";
+  return "warning";
+};
+
+export const playersLobbyStatusLabels = {
+  success: "Ready",
+  warning: "Not Ready",
+  error: "Error",
+};

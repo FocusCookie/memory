@@ -14,7 +14,9 @@ export const Select = ({ labels, onChange, init, disabled, ...props }) => {
   return (
     <div className="select" {...props}>
       <label
-        class={`select__control ${disabled ? "select__control--disabled" : ""}`}
+        className={`select__control ${
+          disabled ? "select__control--disabled" : ""
+        }`}
       >
         <input
           type="radio"
