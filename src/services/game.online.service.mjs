@@ -38,8 +38,36 @@ export const joinGameOnline = async (gameId) => {
     database,
     `games/${gameId}/players/${auth.currentUser.uid}`
   );
-  const test = await set(gamePlayersRef, {
+
+  await set(gamePlayersRef, {
     displayName: auth.currentUser.displayName,
   });
-  return test;
+
+  await setPlayerStatus(gameId, false);
+  return true;
+};
+
+export const leaveGameOnline = async (gameId) => {
+  const auth = getAuth();
+  const gamePlayersRef = ref(
+    database,
+    `games/${gameId}/players/${auth.currentUser.uid}`
+  );
+
+  await set(gamePlayersRef, {
+    displayName: null, // if a value is null firebase deletes the entry
+  });
+
+  await setPlayerStatus(gameId, null);
+  return true;
+};
+
+export const setPlayerStatus = async (gameId, status) => {
+  const auth = getAuth();
+  const gamePlayersRef = ref(
+    database,
+    `games/${gameId}/playersReady/${auth.currentUser.uid}`
+  );
+  await set(gamePlayersRef, status);
+  return true;
 };

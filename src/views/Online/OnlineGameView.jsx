@@ -12,29 +12,26 @@ import {
   getPlayerStatusProperty,
   playersLobbyStatusLabels,
 } from "../../services/player.service.mjs";
+import {
+  leaveGameOnline,
+  setPlayerStatus,
+} from "../../services/game.online.service.mjs";
 
 export function OnlineGameView({ ...props }) {
   const { gameId } = useParams();
   const { status: gameStatus, data: gameData } = useGame(gameId);
   const [loadGame, setLoadGame] = useState(true);
   const history = useHistory();
-  const [playerIsReady, setPlayerIsReady] = useState(false);
 
   useEffect(() => {
     if (gameStatus === "success") {
       setLoadGame(false);
-      console.log(gameData);
     }
   }, [gameStatus]);
 
-  useEffect(() => {
-    //TODO: set player ready in game ref
-    if (playerIsReady) {
-      console.log("set player ready in gameRef");
-    } else {
-      console.log("set player not ready in gameRef");
-    }
-  }, [playerIsReady]);
+  const playerStatusHandler = async (status) => {
+    await setPlayerStatus(gameId, status);
+  };
 
   const createLobbyRows = (gameData) => {
     const playerStates = gameData.playersReady;
@@ -62,7 +59,7 @@ export function OnlineGameView({ ...props }) {
       <Select
         init={false}
         labels={{ off: "👎 I'm not ready.", on: "I'm ready to play! 👍" }}
-        onChange={(value) => setPlayerIsReady(value)}
+        onChange={(status) => playerStatusHandler(status)}
       />
       <Table
         card
@@ -71,6 +68,15 @@ export function OnlineGameView({ ...props }) {
       />
     </div>
   );
+
+  const leaveHandler = async (gameId) => {
+    try {
+      await leaveGameOnline(gameId);
+      history.push("/online");
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div
@@ -82,18 +88,22 @@ export function OnlineGameView({ ...props }) {
           <Button
             label="LEAVE GAME"
             variant="secondary"
-            onClick={() => history.push("/")}
+            onClick={() => leaveHandler(gameId)}
           />
         </Menu>
       </div>
-      <div className="p-4 h-full w-full flex flex-row gap-4 justify-center">
+      <div className="p-4 h-full w-full flex flex-col gap-4 justify-start items-center">
         {loadGame ? (
           <div className="flex flex-col gap-4 items-center">
             <Spinner size="5rem" />
             <p>Loading Game...</p>
           </div>
-        ) : (
+        ) : gameData.state === "waiting" ? (
           showLobby(gameData)
+        ) : (
+          <div className="text-center">
+            <h1 className="text-9xl text-primary">🎮 GAME TIME 🎮</h1>
+          </div>
         )}
       </div>
     </div>
