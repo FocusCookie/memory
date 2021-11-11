@@ -3,6 +3,7 @@ import { database } from "./firebase.service.mjs";
 import { ref, push, set, update } from "firebase/database";
 
 export const createGameOnline = async ({
+  // TODO: remove default values in production
   userID = "myFakeUserID",
   displayName = "myFakeDisplayName",
   theme,
