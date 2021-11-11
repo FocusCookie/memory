@@ -1,0 +1,11 @@
+.create-game {
+  @apply flex flex-col gap-8 bg-transparent;
+}
+
+.create-game__settings {
+  @apply flex flex-col gap-8 p-4 bg-greyscale-offWhite;
+}
+
+.create-game__buttons {
+  @apply flex flex-col gap-4;
+}
