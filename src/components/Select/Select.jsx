@@ -63,6 +63,6 @@ Select.propTypes = {
 
 Select.defaultProps = {
   init: false,
-  labels: { selected: "on", notSelected: "off" },
+  labels: { on: "on", off: "off" },
   disabled: false,
 };
