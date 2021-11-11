@@ -1,14 +1,12 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { Button } from "../Button/Button";
-import { createGameOnline } from "../../services/game.service.mjs";
+import { createGameOnline, themes } from "../../services/game.service.mjs";
 import { useHistory } from "react-router-dom";
 import { Dropdown } from "../Dropdown/Dropdown";
 import { IncrementStepper } from "../IncrementStepper/IncrementStepper";
 import { Card } from "../Card/Card";
 import { getAuth } from "firebase/auth";
-
-const themes = ["Rick & Morty", "Disney", "Amiibos"];
 
 export const CreateGame = ({ initMaxPlayers, initNumberOfPairs, ...props }) => {
   const [theme, setTheme] = useState(themes[0]);
@@ -22,6 +20,7 @@ export const CreateGame = ({ initMaxPlayers, initNumberOfPairs, ...props }) => {
       maxPlayers,
       numberOfPairs,
       userID: auth?.currentUser?.uid,
+      displayName: auth?.currentUser?.displayName,
     });
     history.push(`/online/games/${gameID}`);
   };

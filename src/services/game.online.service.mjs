@@ -4,6 +4,7 @@ import { ref, push, set, update } from "firebase/database";
 
 export const createGameOnline = async ({
   userID = "myFakeUserID",
+  displayName = "myFakeDisplayName",
   theme,
   numberOfPairs,
   maxPlayers,
@@ -12,7 +13,7 @@ export const createGameOnline = async ({
   const board = initializeBoard(cards);
   const game = {
     creator: userID,
-    players: { [userID]: true },
+    players: { [userID]: { displayName } },
     currentPlayer: "",
     turns: [],
     state: "waiting",

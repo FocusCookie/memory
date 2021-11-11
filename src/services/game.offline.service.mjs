@@ -2,6 +2,8 @@ import { getCards as getRickAndMortyCards } from "./rickmorty.service.mjs";
 import { getCards as getDisneyCards } from "./disney.services.mjs";
 import { getCards as getAmiiboCards } from "./amiibo.services.mjs";
 
+export const themes = ["disney", "amiibo", "Rick & Morty"];
+
 export const getCards = async function (theme, amount) {
   if (theme === "disney") {
     return getDisneyCards(amount);
