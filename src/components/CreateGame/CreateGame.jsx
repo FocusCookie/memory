@@ -1,22 +1,29 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { Button } from "../Button/Button";
-import { createGameOnline } from "../../services/game.service.mjs";
+import { createGameOnline, themes } from "../../services/game.service.mjs";
 import { useHistory } from "react-router-dom";
 import { Dropdown } from "../Dropdown/Dropdown";
 import { IncrementStepper } from "../IncrementStepper/IncrementStepper";
 import { Card } from "../Card/Card";
 import { getAuth } from "firebase/auth";
 
-const themes = ["Rick & Morty", "Disney", "Amiibos"];
-
-export const CreateGame = ({ initMaxPlayers, initNrOfPairs, ...props }) => {
+export const CreateGame = ({ initMaxPlayers, initNumberOfPairs, ...props }) => {
   const [theme, setTheme] = useState(themes[0]);
   const [maxPlayers, setMaxPlayers] = useState(initMaxPlayers);
-  const [nrOfPairs, setNrOfPairs] = useState(initNrOfPairs);
+  const [numberOfPairs, setNumberOfPairs] = useState(initNumberOfPairs);
   const history = useHistory();
   const auth = getAuth();
-  const uid = auth?.currentUser?.uid;
+  const createGame = async () => {
+    const gameID = await createGameOnline({
+      theme,
+      maxPlayers,
+      numberOfPairs,
+      userID: auth?.currentUser?.uid,
+      displayName: auth?.currentUser?.displayName,
+    });
+    history.push(`/online/games/${gameID}`);
+  };
 
   return (
     <div className="create-game" {...props}>
@@ -34,18 +41,13 @@ export const CreateGame = ({ initMaxPlayers, initNrOfPairs, ...props }) => {
           />
           <IncrementStepper
             label="CARD PAIRS"
-            onChange={(value) => setNrOfPairs(value)}
+            onChange={(value) => setNumberOfPairs(value)}
             min={1}
           />
         </div>
       </Card>
       <div className="create-game__buttons">
-        <Button
-          label="CREATE"
-          onClick={() =>
-            createGameOnline({ theme, maxPlayers, nrOfPairs, uid })
-          }
-        />
+        <Button label="CREATE" onClick={createGame} />
         <Button
           label="CANCEL"
           variant="secondary"
@@ -58,10 +60,10 @@ export const CreateGame = ({ initMaxPlayers, initNrOfPairs, ...props }) => {
 
 CreateGame.propTypes = {
   initMaxPlayers: PropTypes.number,
-  initNrOfPairs: PropTypes.number,
+  initNumberOfPairs: PropTypes.number,
 };
 
 CreateGame.defaultProps = {
   initMaxPlayers: 2,
-  initNrOfPairs: 8,
+  initNumberOfPairs: 8,
 };
