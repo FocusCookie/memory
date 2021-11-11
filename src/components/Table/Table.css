@@ -2,6 +2,19 @@
   max-height: 80vh;
   @apply overflow-y-auto;
 }
+
+.scrollable::-webkit-scrollbar {
+  @apply w-4 h-4;
+}
+
+.scrollable::-webkit-scrollbar-track {
+  @apply bg-greyscale-background;
+}
+
+.scrollable::-webkit-scrollbar-thumb {
+  @apply bg-primary-dark;
+}
+
 .table {
   @apply w-full bg-greyscale-offWhite;
 }
