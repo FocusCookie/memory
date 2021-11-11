@@ -103,3 +103,23 @@ TableScrollableCard.args = {
   card: true,
   scrollable: true,
 };
+
+export const TableHeadless = Template.bind({});
+TableHeadless.args = {
+  rows: [
+    ["Disney", "3/4", "12", joinButton],
+    ["My Little Pony", "1/4", "9", joinButton],
+    ["Rick & Morty", "1/2", "33", joinButton],
+    ["Disney", "3/4", "12", joinButton],
+    ["My Little Pony", "1/4", "9", joinButton],
+    ["Rick & Morty", "1/2", "33", joinButton],
+    ["Disney", "3/4", "12", joinButton],
+    ["My Little Pony", "1/4", "9", joinButton],
+    ["Rick & Morty", "1/2", "33", joinButton],
+    ["Disney", "3/4", "12", joinButton],
+    ["My Little Pony", "1/4", "9", joinButton],
+    ["Rick & Morty", "1/2", "33", joinButton],
+  ],
+  card: true,
+  scrollable: true,
+};

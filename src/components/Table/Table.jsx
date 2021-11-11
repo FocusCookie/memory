@@ -13,13 +13,15 @@ export const Table = ({
 }) => {
   let table = (
     <table className={className ? "table " + className : "table"} {...props}>
-      <thead>
-        <tr>
-          {headers.map((header) => (
-            <th key={header}>{header}</th>
-          ))}
-        </tr>
-      </thead>
+      {headers && (
+        <thead>
+          <tr>
+            {headers.map((header) => (
+              <th key={header}>{header}</th>
+            ))}
+          </tr>
+        </thead>
+      )}
       <tbody>
         {rows.map((row, i) => (
           <tr
@@ -65,5 +67,4 @@ Table.propTypes = {
 Table.defaultProps = {
   card: false,
   scrollable: false,
-  highlight: false,
 };
