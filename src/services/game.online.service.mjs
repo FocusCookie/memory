@@ -1,6 +1,7 @@
 import { initializeBoard, getCards } from "./game.service.mjs";
 import { database } from "./firebase.service.mjs";
-import { ref, push, set, update } from "firebase/database";
+import { ref, push, set } from "firebase/database";
+import { getAuth } from "firebase/auth";
 
 export const createGameOnline = async ({
   // TODO: remove default values in production
@@ -31,9 +32,14 @@ export const createGameOnline = async ({
   return gameRef;
 };
 
-export const joinGameOnline = ({ userID, gameID }) => {
-  const updates = {
-    [`games/${gameID}/players/${userID}`]: true,
-  };
-  return update(ref(database), updates);
+export const joinGameOnline = async (gameId) => {
+  const auth = getAuth();
+  const gamePlayersRef = ref(
+    database,
+    `games/${gameId}/players/${auth.currentUser.uid}`
+  );
+  const test = await set(gamePlayersRef, {
+    displayName: auth.currentUser.displayName,
+  });
+  return test;
 };
