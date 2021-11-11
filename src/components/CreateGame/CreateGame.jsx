@@ -10,13 +10,12 @@ import { getAuth } from "firebase/auth";
 
 const themes = ["Rick & Morty", "Disney", "Amiibos"];
 
-export const CreateGame = ({ initMaxPlayers, initNrOfPairs, ...props }) => {
+export const CreateGame = ({ initMaxPlayers, initNumberOfPairs, ...props }) => {
   const [theme, setTheme] = useState(themes[0]);
   const [maxPlayers, setMaxPlayers] = useState(initMaxPlayers);
-  const [nrOfPairs, setNrOfPairs] = useState(initNrOfPairs);
+  const [numberOfPairs, setNumberOfPairs] = useState(initNumberOfPairs);
   const history = useHistory();
   const auth = getAuth();
-  const uid = auth?.currentUser?.uid;
 
   return (
     <div className="create-game" {...props}>
@@ -34,7 +33,7 @@ export const CreateGame = ({ initMaxPlayers, initNrOfPairs, ...props }) => {
           />
           <IncrementStepper
             label="CARD PAIRS"
-            onChange={(value) => setNrOfPairs(value)}
+            onChange={(value) => setNumberOfPairs(value)}
             min={1}
           />
         </div>
@@ -43,7 +42,12 @@ export const CreateGame = ({ initMaxPlayers, initNrOfPairs, ...props }) => {
         <Button
           label="CREATE"
           onClick={() =>
-            createGameOnline({ theme, maxPlayers, nrOfPairs, uid })
+            createGameOnline({
+              theme,
+              maxPlayers,
+              numberOfPairs,
+              userID: auth?.currentUser?.uid,
+            })
           }
         />
         <Button
@@ -58,10 +62,10 @@ export const CreateGame = ({ initMaxPlayers, initNrOfPairs, ...props }) => {
 
 CreateGame.propTypes = {
   initMaxPlayers: PropTypes.number,
-  initNrOfPairs: PropTypes.number,
+  initNumberOfPairs: PropTypes.number,
 };
 
 CreateGame.defaultProps = {
   initMaxPlayers: 2,
-  initNrOfPairs: 8,
+  initNumberOfPairs: 8,
 };

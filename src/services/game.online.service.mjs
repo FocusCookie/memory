@@ -1,25 +1,25 @@
-import { initializeBoard, getCards } from "./game.offline.service.mjs";
+import { initializeBoard, getCards } from "./game.service.mjs";
 import { database } from "./firebase.service.mjs";
 import { ref, push, set, update } from "firebase/database";
 
 export const createGameOnline = async ({
-  userID,
+  userID = "myFakeUserID",
   theme,
   numberOfPairs,
-  maxNumberOfPlayers,
+  maxPlayers,
 }) => {
   const cards = await getCards(theme, numberOfPairs);
   const board = initializeBoard(cards);
   const game = {
     creator: userID,
-    players: [userID],
+    players: { [userID]: true },
     currentPlayer: "",
-    turns: [null],
+    turns: [],
     state: "waiting",
     rematch: { [userID]: false },
     playersReady: { [userID]: false },
     board,
-    maxNumberOfPlayers,
+    maxPlayers,
     theme,
     numberOfPairs,
   };
