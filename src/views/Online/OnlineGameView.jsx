@@ -12,6 +12,7 @@ import {
   getPlayerStatusProperty,
   playersLobbyStatusLabels,
 } from "../../services/player.service.mjs";
+import { GameboardOnline } from "../../components/GameboardOnline/GameboardOnline";
 
 export function OnlineGameView({ ...props }) {
   const { gameId } = useParams();
@@ -95,6 +96,7 @@ export function OnlineGameView({ ...props }) {
         ) : (
           showLobby(gameData)
         )}
+        {!loadGame && <GameboardOnline game={gameData} />}
       </div>
     </div>
   );

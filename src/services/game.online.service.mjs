@@ -15,8 +15,8 @@ export const createGameOnline = async ({
   const game = {
     creator: userID,
     players: { [userID]: { displayName } },
-    currentPlayer: "",
-    turns: [],
+    currentPlayer: userID,
+    turn: 0,
     state: "waiting",
     rematch: { [userID]: false },
     playersReady: { [userID]: false },
@@ -28,7 +28,7 @@ export const createGameOnline = async ({
   const gamesListRef = ref(database, "games");
   const gameRef = push(gamesListRef);
   set(gameRef, game);
-  return gameRef;
+  return gameRef.key;
 };
 
 export const joinGameOnline = ({ userID, gameID }) => {
@@ -36,4 +36,8 @@ export const joinGameOnline = ({ userID, gameID }) => {
     [`games/${gameID}/players/${userID}`]: true,
   };
   return update(ref(database), updates);
+};
+
+export const updateGameOnline = ({ gameID, updates }) => {
+  return update(ref(database, `games/${gameID}`), updates);
 };
