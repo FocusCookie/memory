@@ -29,12 +29,12 @@ export const TableGames = ({ ...props }) => {
 
   const headers = ["Theme", "# of Players", "# of Pairs", "Action"];
   const rows = data
-    .filter(
+    ?.filter(
       ({ maxPlayers, players, state }) =>
         // quick and dirty fix wegen undefinierter player: || []
         gameIsNotFull(maxPlayers, players || []) && state === "waiting"
     )
-    .map(({ id, theme, maxPlayers, players, numberOfPairs }) => [
+    ?.map(({ id, theme, maxPlayers, players, numberOfPairs }) => [
       theme,
       // quick and dirty fix wegen undefinierter player: || []
       `${Object.keys(players || []).length}/${maxPlayers}`,
