@@ -12,16 +12,21 @@ import {
   getPlayerStatusProperty,
   playersLobbyStatusLabels,
 } from "../../services/player.service.mjs";
+import { GameboardOnline } from "../../components/GameboardOnline/GameboardOnline";
 import {
   leaveGameOnline,
   setPlayerStatus,
+  allPlayersAreReady,
+  startGameOnline,
 } from "../../services/game.online.service.mjs";
+import { getAuth } from "firebase/auth";
 
 export function OnlineGameView({ ...props }) {
   const { gameId } = useParams();
   const { status: gameStatus, data: gameData } = useGame(gameId);
   const [loadGame, setLoadGame] = useState(true);
   const history = useHistory();
+  const userID = getAuth().currentUser.uid;
 
   useEffect(() => {
     if (gameStatus === "success") {
@@ -29,6 +34,12 @@ export function OnlineGameView({ ...props }) {
       console.log(gameData);
     }
   }, [gameStatus]);
+
+  useEffect(() => {
+    if (gameStatus !== "success") return;
+    if (gameData.creator !== userID || gameData.state !== "waiting") return;
+    if (allPlayersAreReady(gameData)) startGameOnline(gameData);
+  }, [gameData?.playersReady]);
 
   const playerStatusHandler = async (status) => {
     try {
@@ -74,9 +85,9 @@ export function OnlineGameView({ ...props }) {
     </div>
   );
 
-  const leaveHandler = async (gameId) => {
+  const leaveHandler = (gameId) => {
     try {
-      await leaveGameOnline(gameId);
+      leaveGameOnline(gameId);
       history.push("/online");
     } catch (error) {
       console.log(error);
@@ -85,15 +96,17 @@ export function OnlineGameView({ ...props }) {
 
   const playerScoreRows = (gameData) => {
     const players = gameData.players;
-    const scores = gameData.scores;
+    if (!players) return;
+    const score = gameData.score;
     const playersRows = Object.entries(players).map(([userId, user]) => {
-      return [user.displayName, scores[userId]];
+      return [user.displayName, score[userId]];
     });
 
     return playersRows;
   };
 
   const highlightNumberOfCurrentPlayer = (gameData) => {
+    if (!gameData.players) return;
     const numOfCurrentPlayer = Object.keys(gameData.players).indexOf(
       gameData.currentPlayer
     );
@@ -134,7 +147,7 @@ export function OnlineGameView({ ...props }) {
                 highlight={highlightNumberOfCurrentPlayer(gameData)}
               />
             </div>
-            <h1 className="text-9xl text-primary flex-grow">🎮 GAME TIME 🎮</h1>
+            <GameboardOnline game={gameData} />
           </div>
         )}
       </div>

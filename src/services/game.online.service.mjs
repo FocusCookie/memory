@@ -16,8 +16,8 @@ export const createGameOnline = async ({
   const game = {
     creator: userID,
     players: { [userID]: { displayName } },
-    currentPlayer: "",
-    turns: [],
+    currentPlayer: userID,
+    turn: 0,
     state: "waiting",
     rematch: { [userID]: false },
     playersReady: { [userID]: false },
@@ -29,7 +29,7 @@ export const createGameOnline = async ({
   const gamesListRef = ref(database, "games");
   const gameRef = push(gamesListRef);
   set(gameRef, game);
-  return gameRef;
+  return gameRef.key;
 };
 
 export const joinGameOnline = async (gameId) => {
@@ -72,13 +72,12 @@ export const setPlayerStatus = async (gameId, status) => {
   return true;
 };
 
-
-export const checkIfAllPlayersAreReady = (gameData) => {
+export const allPlayersAreReady = (gameData) => {
   const playersStates = Object.values(gameData.playersReady);
   const allPlayersWhichAreReady = playersStates.filter((state) => state);
 
   return allPlayersWhichAreReady.length === playersStates.length;
-}
+};
 
 export const setGameState = async (gameId, state) => {
   const gameStateRef = ref(database, `games/${gameId}/state`);
@@ -95,4 +94,23 @@ export const setGameState = async (gameId, state) => {
   } else {
     throw new Error("Couldn't set state for game/" + gameId);
   }
+};
+
+export const updateGameOnline = ({ gameID, updates }) => {
+  return update(ref(database, `games/${gameID}`), updates);
+};
+
+export const startGameOnline = ({ id: gameID, players }) => {
+  const initScore = () => {
+    const score = {};
+    for (const player of Object.keys(players)) {
+      score[player] = 0;
+    }
+    return score;
+  };
+  const updates = {
+    score: initScore(),
+    state: "started",
+  };
+  updateGameOnline({ gameID, updates });
 };

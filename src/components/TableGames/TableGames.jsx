@@ -29,13 +29,13 @@ export const TableGames = ({ ...props }) => {
 
   const headers = ["Theme", "# of Players", "# of Pairs", "Action"];
   const rows = data
-    .filter(
+    ?.filter(
       ({ maxPlayers, players, state }) =>
-        gameIsNotFull(maxPlayers, players) && state === "waiting"
+        gameIsNotFull(maxPlayers, players || []) && state === "waiting"
     )
-    .map(({ id, theme, maxPlayers, players, numberOfPairs }) => [
+    ?.map(({ id, theme, maxPlayers, players, numberOfPairs }) => [
       theme,
-      `${Object.keys(players).length}/${maxPlayers}`,
+      `${Object.keys(players || []).length}/${maxPlayers}`,
       numberOfPairs,
       <Button
         label="JOIN"
