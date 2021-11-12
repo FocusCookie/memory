@@ -83,20 +83,20 @@ export function OnlineGameView({ ...props }) {
     }
   };
 
-  const createPlayersGameRows = (gameData) => {
+  const playerScoreRows = (gameData) => {
     const players = gameData.players;
     const scores = gameData.scores;
-    const playersRow = Object.entries(players).map(([userId, user]) => {
+    const playersRows = Object.entries(players).map(([userId, user]) => {
       return [user.displayName, scores[userId]];
     });
 
-    return playersRow;
+    return playersRows;
   };
 
   const highlightNumberOfCurrentPlayer = (gameData) => {
-    const numOfCurrentPlayer = Object.entries(gameData.players)
-      .map(([userId]) => userId)
-      .indexOf(gameData.currentPlayer);
+    const numOfCurrentPlayer = Object.keys(gameData.players).indexOf(
+      gameData.currentPlayer
+    );
 
     // plus one because in the table component 0 is the header
     return numOfCurrentPlayer + 1;
@@ -130,7 +130,7 @@ export function OnlineGameView({ ...props }) {
               <Table
                 card
                 headers={["Player", "Score"]}
-                rows={createPlayersGameRows(gameData)}
+                rows={playerScoreRows(gameData)}
                 highlight={highlightNumberOfCurrentPlayer(gameData)}
               />
             </div>
