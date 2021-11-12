@@ -39,6 +39,14 @@ export const joinGameOnline = ({ userID, gameID }) => {
   return update(ref(database), updates);
 };
 
+
+export const checkIfAllPlayersAreReady = (gameData) => {
+  const playersStates = Object.values(gameData.playersReady);
+  const allPlayersWhichAreReady = playersStates.filter((state) => state);
+
+  return allPlayersWhichAreReady.length === playersStates.length;
+}
+
 export const setGameState = async (gameId, state) => {
   const gameStateRef = ref(database, `games/${gameId}/state`);
   const snapshot = await get(gameStateRef);
