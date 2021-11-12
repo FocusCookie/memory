@@ -16,19 +16,29 @@ import { GameboardOnline } from "../../components/GameboardOnline/GameboardOnlin
 import {
   leaveGameOnline,
   setPlayerStatus,
+  allPlayersAreReady,
+  startGameOnline,
 } from "../../services/game.online.service.mjs";
+import { getAuth } from "firebase/auth";
 
 export function OnlineGameView({ ...props }) {
   const { gameId } = useParams();
   const { status: gameStatus, data: gameData } = useGame(gameId);
   const [loadGame, setLoadGame] = useState(true);
   const history = useHistory();
+  const userID = getAuth().currentUser.uid;
 
   useEffect(() => {
     if (gameStatus === "success") {
       setLoadGame(false);
     }
   }, [gameStatus]);
+
+  useEffect(() => {
+    if (gameStatus !== "success") return;
+    if (gameData.creator !== userID || gameData.state !== "waiting") return;
+    if (allPlayersAreReady(gameData)) startGameOnline(gameData);
+  }, [gameData?.playersReady]);
 
   const playerStatusHandler = async (status) => {
     try {

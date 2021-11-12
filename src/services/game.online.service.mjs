@@ -72,13 +72,12 @@ export const setPlayerStatus = async (gameId, status) => {
   return true;
 };
 
-
-export const checkIfAllPlayersAreReady = (gameData) => {
+export const allPlayersAreReady = (gameData) => {
   const playersStates = Object.values(gameData.playersReady);
   const allPlayersWhichAreReady = playersStates.filter((state) => state);
 
   return allPlayersWhichAreReady.length === playersStates.length;
-}
+};
 
 export const setGameState = async (gameId, state) => {
   const gameStateRef = ref(database, `games/${gameId}/state`);
@@ -99,4 +98,19 @@ export const setGameState = async (gameId, state) => {
 
 export const updateGameOnline = ({ gameID, updates }) => {
   return update(ref(database, `games/${gameID}`), updates);
+};
+
+export const startGameOnline = ({ id: gameID, players }) => {
+  const initScore = () => {
+    const score = {};
+    for (const player of Object.keys(players)) {
+      score[player] = 0;
+    }
+    return score;
+  };
+  const updates = {
+    score: initScore(),
+    state: "started",
+  };
+  updateGameOnline({ gameID, updates });
 };
