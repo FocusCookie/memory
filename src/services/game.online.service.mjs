@@ -1,6 +1,6 @@
 import { initializeBoard, getCards } from "./game.service.mjs";
 import { database } from "./firebase.service.mjs";
-import { ref, push, set } from "firebase/database";
+import { ref, push, set, update, get } from "firebase/database";
 import { getAuth } from "firebase/auth";
 
 export const createGameOnline = async ({
@@ -70,4 +70,29 @@ export const setPlayerStatus = async (gameId, status) => {
   );
   await set(gamePlayersRef, status);
   return true;
+};
+
+
+export const checkIfAllPlayersAreReady = (gameData) => {
+  const playersStates = Object.values(gameData.playersReady);
+  const allPlayersWhichAreReady = playersStates.filter((state) => state);
+
+  return allPlayersWhichAreReady.length === playersStates.length;
+}
+
+export const setGameState = async (gameId, state) => {
+  const gameStateRef = ref(database, `games/${gameId}/state`);
+  const snapshot = await get(gameStateRef);
+
+  if (snapshot.exists()) {
+    const currentState = snapshot.val();
+    if (currentState !== state) {
+      await set(gameStateRef, state);
+      return true;
+    } else {
+      return false;
+    }
+  } else {
+    throw new Error("Couldn't set state for game/" + gameId);
+  }
 };
