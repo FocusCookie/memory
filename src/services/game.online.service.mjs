@@ -39,9 +39,7 @@ export const joinGameOnline = ({ userID, gameID }) => {
 };
 
 export const checkIfAllPlayersAreReady = (gameData) => {
-  const playersStates = Object.entries(gameData.playersReady).map(
-    ([userId, state]) => state
-  );
+  const playersStates = Object.values(gameData.playersReady);
   const allPlayersWhichAreReady = playersStates.filter((state) => state);
 
   return allPlayersWhichAreReady.length === playersStates.length;
