@@ -26,6 +26,7 @@ export function OnlineGameView({ ...props }) {
   useEffect(() => {
     if (gameStatus === "success") {
       setLoadGame(false);
+      console.log(gameData);
     }
   }, [gameStatus]);
 
@@ -82,6 +83,25 @@ export function OnlineGameView({ ...props }) {
     }
   };
 
+  const playerScoreRows = (gameData) => {
+    const players = gameData.players;
+    const scores = gameData.scores;
+    const playersRows = Object.entries(players).map(([userId, user]) => {
+      return [user.displayName, scores[userId]];
+    });
+
+    return playersRows;
+  };
+
+  const highlightNumberOfCurrentPlayer = (gameData) => {
+    const numOfCurrentPlayer = Object.keys(gameData.players).indexOf(
+      gameData.currentPlayer
+    );
+
+    // plus one because in the table component 0 is the header
+    return numOfCurrentPlayer + 1;
+  };
+
   return (
     <div
       {...props}
@@ -105,8 +125,16 @@ export function OnlineGameView({ ...props }) {
         ) : gameData.state === "waiting" ? (
           showLobby(gameData)
         ) : (
-          <div className="text-center">
-            <h1 className="text-9xl text-primary">🎮 GAME TIME 🎮</h1>
+          <div className="flex flex-row gap-4 justify-between items-start w-full">
+            <div className="w-min">
+              <Table
+                card
+                headers={["Player", "Score"]}
+                rows={playerScoreRows(gameData)}
+                highlight={highlightNumberOfCurrentPlayer(gameData)}
+              />
+            </div>
+            <h1 className="text-9xl text-primary flex-grow">🎮 GAME TIME 🎮</h1>
           </div>
         )}
       </div>
