@@ -33,7 +33,7 @@ export const TableGames = ({ ...props }) => {
       ({ maxPlayers, players, state }) =>
         gameIsNotFull(maxPlayers, players) && state === "waiting"
     )
-    .map(({ id, theme, maxPlayers, players, numberOfPairs, state }) => [
+    .map(({ id, theme, maxPlayers, players, numberOfPairs }) => [
       theme,
       `${Object.keys(players).length}/${maxPlayers}`,
       numberOfPairs,

@@ -30,7 +30,11 @@ export function OnlineGameView({ ...props }) {
   }, [gameStatus]);
 
   const playerStatusHandler = async (status) => {
-    await setPlayerStatus(gameId, status);
+    try {
+      await setPlayerStatus(gameId, status);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const createLobbyRows = (gameData) => {
