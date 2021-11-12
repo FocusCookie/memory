@@ -37,3 +37,12 @@ export const joinGameOnline = ({ userID, gameID }) => {
   };
   return update(ref(database), updates);
 };
+
+export const checkIfPlayersAreReady = (gameData) => {
+  const playersStates = Object.entries(gameData.playersReady).map(
+    ([userId, state]) => state
+  );
+  const allPlayersWhichAreReady = playersStates.filter((state) => state);
+
+  return allPlayersWhichAreReady.length === playersStates.length;
+};
