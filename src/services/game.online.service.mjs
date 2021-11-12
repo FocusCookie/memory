@@ -72,13 +72,12 @@ export const setPlayerStatus = async (gameId, status) => {
   return true;
 };
 
-
 export const checkIfAllPlayersAreReady = (gameData) => {
   const playersStates = Object.values(gameData.playersReady);
   const allPlayersWhichAreReady = playersStates.filter((state) => state);
 
   return allPlayersWhichAreReady.length === playersStates.length;
-}
+};
 
 export const setGameState = async (gameId, state) => {
   const gameStateRef = ref(database, `games/${gameId}/state`);
@@ -95,4 +94,26 @@ export const setGameState = async (gameId, state) => {
   } else {
     throw new Error("Couldn't set state for game/" + gameId);
   }
+};
+
+export const getScoreboard = (gameData) => {
+  if (!gameData || !gameData?.scores || !gameData?.players)
+    throw new Error("Invalid gameData");
+  const players = Object.entries(gameData.players);
+  const scores = gameData.scores;
+
+  const playersWithScores = players.map((player) => {
+    // player[0] uid player[1] displayName
+    return { ...player[1], score: scores[player[0]] };
+  });
+
+  const scoreBoard = playersWithScores.sort((a, b) => b.score - a.score);
+  return scoreBoard;
+};
+
+export const getPlaceMedal = (place) => {
+  if (place === 1) return "🥇";
+  if (place === 2) return "🥈";
+  if (place === 3) return "🥉";
+  return "🎖";
 };
