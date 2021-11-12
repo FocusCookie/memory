@@ -7,6 +7,7 @@ import { Table } from "../../components/Table/Table";
 import { Spinner } from "../../components/Spinner/Spinner";
 import { Status } from "../../components/Status/Status";
 import { Modal } from "../../components/Modal/Modal";
+import { Scoreboard } from "../../components/Scoreboard/Scoreboard";
 import { useParams } from "react-router-dom";
 import { useGame } from "../../hooks/useGame";
 import { CardHiCF } from "../../components/CardHiCF/CardHiCF";
@@ -17,8 +18,6 @@ import {
 import {
   leaveGameOnline,
   setPlayerStatus,
-  getScoreboard,
-  getPlaceMedal,
 } from "../../services/game.online.service.mjs";
 import Cover from "../../assets/Cover.jpg";
 
@@ -31,8 +30,6 @@ export function OnlineGameView({ ...props }) {
   useEffect(() => {
     if (gameStatus === "success") {
       setLoadGame(false);
-      console.log(gameData);
-      console.log(getScoreboard(gameData));
     }
   }, [gameStatus]);
 
@@ -89,28 +86,6 @@ export function OnlineGameView({ ...props }) {
     }
   };
 
-  const scoreBoard = (gameData) => {
-    return (
-      <div className="flex flex-col gap-4">
-        <h1 className="text-primary text-4xl font-bold">🥳 GAME OVER 🥳</h1>
-        <div className="flex flex-col gap-4">
-          {getScoreboard(gameData).map((player, place) => (
-            <div
-              className="flex flex-row gap-2 text-2xl"
-              key={player.displayName}
-            >
-              <span>{getPlaceMedal(place + 1)}</span>
-              <span className="flex-grow text-left font-bold pr-8">
-                {player.displayName}
-              </span>
-              <span className="font-semibold text-greyscale-placeholder">{`${player.score} Pairs`}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-    );
-  };
-
   return (
     <div
       {...props}
@@ -141,7 +116,7 @@ export function OnlineGameView({ ...props }) {
                 <div className="max-w-2xl">
                   <CardHiCF
                     img={{ src: Cover, alt: "Rick and Morty" }}
-                    content={scoreBoard(gameData)}
+                    content={Scoreboard(gameData)}
                     footer={
                       <Button
                         label="LEAVE GAME"
