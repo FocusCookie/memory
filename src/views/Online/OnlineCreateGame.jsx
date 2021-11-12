@@ -2,6 +2,7 @@ import React from "react";
 import { useHistory } from "react-router";
 import { Button } from "../../components/Button/Button";
 import { Menu } from "../../components/Menu/Menu";
+import { CreateGame } from "../../components/CreateGame/CreateGame";
 
 export function OnlineCreateGame({ ...props }) {
   const history = useHistory();
@@ -21,12 +22,8 @@ export function OnlineCreateGame({ ...props }) {
         </Menu>
       </div>
       <div className="p-4 h-full flex flex-col gap-4 items-center">
-        <h1>Creat game</h1>
-        <Button
-          label="CANCEL CREATION"
-          variant="secondary"
-          onClick={() => history.push("/")}
-        />
+        <h1>Create game</h1>
+        <CreateGame />
       </div>
     </div>
   );

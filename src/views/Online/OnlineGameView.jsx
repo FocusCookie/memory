@@ -15,23 +15,38 @@ import {
   getPlayerStatusProperty,
   playersLobbyStatusLabels,
 } from "../../services/player.service.mjs";
+import { GameboardOnline } from "../../components/GameboardOnline/GameboardOnline";
 import {
   leaveGameOnline,
   setPlayerStatus,
+  allPlayersAreReady,
+  startGameOnline,
 } from "../../services/game.online.service.mjs";
 import Cover from "../../assets/Cover.jpg";
+import { getAuth } from "firebase/auth";
 
 export function OnlineGameView({ ...props }) {
   const { gameId } = useParams();
   const { status: gameStatus, data: gameData } = useGame(gameId);
   const [loadGame, setLoadGame] = useState(true);
   const history = useHistory();
+  const userID = getAuth().currentUser.uid;
 
   useEffect(() => {
     if (gameStatus === "success") {
       setLoadGame(false);
     }
   }, [gameStatus]);
+
+  useEffect(() => {
+    if (gameStatus !== "success") return;
+    if (gameData.creator !== userID || gameData.state !== "waiting") return;
+    if (
+      allPlayersAreReady(gameData) &&
+      Object.keys(gameData.players).length === gameData.maxPlayers
+    )
+      startGameOnline(gameData);
+  }, [gameData?.playersReady]);
 
   const playerStatusHandler = async (status) => {
     try {
@@ -77,13 +92,34 @@ export function OnlineGameView({ ...props }) {
     </div>
   );
 
-  const leaveHandler = async (gameId) => {
+  const leaveHandler = (gameId) => {
     try {
-      await leaveGameOnline(gameId);
+      leaveGameOnline(gameId);
       history.push("/online");
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const playerScoreRows = (gameData) => {
+    const players = gameData.players;
+    if (!players) return;
+    const scores = gameData.scores;
+    const playersRows = Object.entries(players).map(([userId, user]) => {
+      return [user.displayName, scores[userId]];
+    });
+
+    return playersRows;
+  };
+
+  const highlightNumberOfCurrentPlayer = (gameData) => {
+    if (!gameData.players) return;
+    const numOfCurrentPlayer = Object.keys(gameData.players).indexOf(
+      gameData.currentPlayer
+    );
+
+    // plus one because in the table component 0 is the header
+    return numOfCurrentPlayer + 1;
   };
 
   return (
@@ -110,13 +146,12 @@ export function OnlineGameView({ ...props }) {
           showLobby(gameData)
         ) : (
           <div className="text-center">
-            <h1 className="text-9xl text-primary">🎮 GAME TIME 🎮</h1>
             {gameData.state === "done" ? (
               <Modal>
                 <div className="max-w-2xl">
                   <CardHiCF
                     img={{ src: Cover, alt: "Rick and Morty" }}
-                    content={Scoreboard(gameData)}
+                    content={<Scoreboard game={gameData} />}
                     footer={
                       <Button
                         label="LEAVE GAME"
@@ -126,7 +161,19 @@ export function OnlineGameView({ ...props }) {
                   />
                 </div>
               </Modal>
-            ) : null}
+            ) : (
+              <div className="flex flex-row gap-4 justify-between items-start w-full">
+                <div className="w-min">
+                  <Table
+                    card
+                    headers={["Player", "Score"]}
+                    rows={playerScoreRows(gameData)}
+                    highlight={highlightNumberOfCurrentPlayer(gameData)}
+                  />
+                </div>
+                <GameboardOnline game={gameData} />{" "}
+              </div>
+            )}
           </div>
         )}
       </div>

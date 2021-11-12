@@ -7,6 +7,8 @@ import { Spinner } from "../Spinner/Spinner";
 import { joinGameOnline } from "../../services/game.online.service.mjs";
 
 const gameIsNotFull = (maxPlayers, players) => {
+  if (players === undefined) return true; //TODO: Should be changed, But now the game is init without players object
+
   const playersCount = Object.keys(players).length;
   return playersCount < maxPlayers ? true : false;
 };
@@ -29,13 +31,13 @@ export const TableGames = ({ ...props }) => {
 
   const headers = ["Theme", "# of Players", "# of Pairs", "Action"];
   const rows = data
-    .filter(
+    ?.filter(
       ({ maxPlayers, players, state }) =>
-        gameIsNotFull(maxPlayers, players) && state === "waiting"
+        gameIsNotFull(maxPlayers, players || []) && state === "waiting"
     )
-    .map(({ id, theme, maxPlayers, players, numberOfPairs }) => [
+    ?.map(({ id, theme, maxPlayers, players, numberOfPairs }) => [
       theme,
-      `${Object.keys(players).length}/${maxPlayers}`,
+      `${Object.keys(players || []).length}/${maxPlayers}`,
       numberOfPairs,
       <Button
         label="JOIN"

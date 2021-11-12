@@ -23,7 +23,7 @@ export const Table = ({
         </thead>
       )}
       <tbody>
-        {rows.map((row, i) => (
+        {rows?.map((row, i) => (
           <tr
             key={i}
             className={i + 1 === highlight ? "table-row--highlight" : ""}
