@@ -38,7 +38,7 @@ export const joinGameOnline = ({ userID, gameID }) => {
   return update(ref(database), updates);
 };
 
-export const checkIfPlayersAreReady = (gameData) => {
+export const checkIfAllPlayersAreReady = (gameData) => {
   const playersStates = Object.entries(gameData.playersReady).map(
     ([userId, state]) => state
   );
