@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { getAuth } from "firebase/auth";
 import { gameIsOver, updateGameOnline } from "../../services/game.service";
 import { PlayCard } from "../PlayCard/PlayCard";
 
 const turnIsAllowed = (turn) => turn < 2;
+
+const endOfGame = (board) => {
+  return board.every((card) => card.cleared);
+};
 
 const getNextPlayer = ({ players, currentPlayer }) => {
   const playerArray = Object.keys(players);
@@ -52,13 +56,15 @@ export const GameboardOnline = ({ game, ...props }) => {
     if (revealedCardsMatch(board)) {
       const newScore = game.score[userID] + 1;
       const newBoard = clearCards(board);
+      const updates = {
+        turn: 0,
+        board: newBoard,
+        [`score/${userID}`]: newScore,
+      };
+      if (endOfGame(newBoard)) updates.state = "done";
       updateGameOnline({
         gameID,
-        updates: {
-          turn: 0,
-          board: newBoard,
-          [`score/${userID}`]: newScore,
-        },
+        updates,
       });
     } else {
       const newBoard = unrevealCards(board);
@@ -79,7 +85,7 @@ export const GameboardOnline = ({ game, ...props }) => {
   };
 
   useEffect(() => {
-    if (!endOfTurn) return;
+    if (!itsMyTurn || !endOfTurn) return;
 
     const timeoutID = setTimeout(() => {
       handleEndOfTurn();

@@ -1,6 +1,7 @@
 import { initializeBoard, getCards } from "./game.service.mjs";
 import { database } from "./firebase.service.mjs";
-import { ref, push, set, update } from "firebase/database";
+import { ref, push, set, update, get } from "firebase/database";
+import { getAuth } from "firebase/auth";
 
 export const createGameOnline = async ({
   // TODO: remove default values in production
@@ -31,11 +32,69 @@ export const createGameOnline = async ({
   return gameRef.key;
 };
 
-export const joinGameOnline = ({ userID, gameID }) => {
-  const updates = {
-    [`games/${gameID}/players/${userID}`]: true,
-  };
-  return update(ref(database), updates);
+export const joinGameOnline = async (gameId) => {
+  const auth = getAuth();
+  const gamePlayersRef = ref(
+    database,
+    `games/${gameId}/players/${auth.currentUser.uid}`
+  );
+
+  await set(gamePlayersRef, {
+    displayName: auth.currentUser.displayName,
+  });
+
+  await setPlayerStatus(gameId, false);
+  return true;
+};
+
+export const leaveGameOnline = async (gameId) => {
+  const auth = getAuth();
+  const gamePlayersRef = ref(
+    database,
+    `games/${gameId}/players/${auth.currentUser.uid}`
+  );
+
+  await set(gamePlayersRef, {
+    displayName: null, // if a value is null firebase deletes the entry
+  });
+
+  await setPlayerStatus(gameId, null);
+  return true;
+};
+
+export const setPlayerStatus = async (gameId, status) => {
+  const auth = getAuth();
+  const gamePlayersRef = ref(
+    database,
+    `games/${gameId}/playersReady/${auth.currentUser.uid}`
+  );
+  await set(gamePlayersRef, status);
+  return true;
+};
+
+
+export const checkIfAllPlayersAreReady = (gameData) => {
+  const playersStates = Object.values(gameData.playersReady);
+  const allPlayersWhichAreReady = playersStates.filter((state) => state);
+
+  return allPlayersWhichAreReady.length === playersStates.length;
+}
+
+export const setGameState = async (gameId, state) => {
+  const gameStateRef = ref(database, `games/${gameId}/state`);
+  const snapshot = await get(gameStateRef);
+
+  if (snapshot.exists()) {
+    const currentState = snapshot.val();
+    if (currentState !== state) {
+      await set(gameStateRef, state);
+      return true;
+    } else {
+      return false;
+    }
+  } else {
+    throw new Error("Couldn't set state for game/" + gameId);
+  }
 };
 
 export const updateGameOnline = ({ gameID, updates }) => {
