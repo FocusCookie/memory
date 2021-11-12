@@ -7,6 +7,8 @@ import { Spinner } from "../Spinner/Spinner";
 import { joinGameOnline } from "../../services/game.online.service.mjs";
 
 const gameIsNotFull = (maxPlayers, players) => {
+  if (players === undefined) return true; //TODO: Should be changed, But now the game is init without players object
+
   const playersCount = Object.keys(players).length;
   return playersCount < maxPlayers ? true : false;
 };

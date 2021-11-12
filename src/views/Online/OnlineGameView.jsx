@@ -6,8 +6,11 @@ import { Select } from "../../components/Select/Select";
 import { Table } from "../../components/Table/Table";
 import { Spinner } from "../../components/Spinner/Spinner";
 import { Status } from "../../components/Status/Status";
+import { Modal } from "../../components/Modal/Modal";
+import { Scoreboard } from "../../components/Scoreboard/Scoreboard";
 import { useParams } from "react-router-dom";
 import { useGame } from "../../hooks/useGame";
+import { CardHiCF } from "../../components/CardHiCF/CardHiCF";
 import {
   getPlayerStatusProperty,
   playersLobbyStatusLabels,
@@ -19,6 +22,7 @@ import {
   allPlayersAreReady,
   startGameOnline,
 } from "../../services/game.online.service.mjs";
+import Cover from "../../assets/Cover.jpg";
 import { getAuth } from "firebase/auth";
 
 export function OnlineGameView({ ...props }) {
@@ -31,14 +35,17 @@ export function OnlineGameView({ ...props }) {
   useEffect(() => {
     if (gameStatus === "success") {
       setLoadGame(false);
-      console.log(gameData);
     }
   }, [gameStatus]);
 
   useEffect(() => {
     if (gameStatus !== "success") return;
     if (gameData.creator !== userID || gameData.state !== "waiting") return;
-    if (allPlayersAreReady(gameData)) startGameOnline(gameData);
+    if (
+      allPlayersAreReady(gameData) &&
+      Object.keys(gameData.players).length === gameData.maxPlayers
+    )
+      startGameOnline(gameData);
   }, [gameData?.playersReady]);
 
   const playerStatusHandler = async (status) => {
@@ -97,9 +104,9 @@ export function OnlineGameView({ ...props }) {
   const playerScoreRows = (gameData) => {
     const players = gameData.players;
     if (!players) return;
-    const score = gameData.score;
+    const scores = gameData.scores;
     const playersRows = Object.entries(players).map(([userId, user]) => {
-      return [user.displayName, score[userId]];
+      return [user.displayName, scores[userId]];
     });
 
     return playersRows;
@@ -138,16 +145,35 @@ export function OnlineGameView({ ...props }) {
         ) : gameData.state === "waiting" ? (
           showLobby(gameData)
         ) : (
-          <div className="flex flex-row gap-4 justify-between items-start w-full">
-            <div className="w-min">
-              <Table
-                card
-                headers={["Player", "Score"]}
-                rows={playerScoreRows(gameData)}
-                highlight={highlightNumberOfCurrentPlayer(gameData)}
-              />
-            </div>
-            <GameboardOnline game={gameData} />
+          <div className="text-center">
+            {gameData.state === "done" ? (
+              <Modal>
+                <div className="max-w-2xl">
+                  <CardHiCF
+                    img={{ src: Cover, alt: "Rick and Morty" }}
+                    content={<Scoreboard game={gameData} />}
+                    footer={
+                      <Button
+                        label="LEAVE GAME"
+                        onClick={() => history.push("/online")}
+                      />
+                    }
+                  />
+                </div>
+              </Modal>
+            ) : (
+              <div className="flex flex-row gap-4 justify-between items-start w-full">
+                <div className="w-min">
+                  <Table
+                    card
+                    headers={["Player", "Score"]}
+                    rows={playerScoreRows(gameData)}
+                    highlight={highlightNumberOfCurrentPlayer(gameData)}
+                  />
+                </div>
+                <GameboardOnline game={gameData} />{" "}
+              </div>
+            )}
           </div>
         )}
       </div>

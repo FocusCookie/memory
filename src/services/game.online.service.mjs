@@ -96,20 +96,42 @@ export const setGameState = async (gameId, state) => {
   }
 };
 
+export const getScoreboard = (gameData) => {
+  if (!gameData || !gameData?.scores || !gameData?.players)
+    throw new Error("Invalid gameData");
+  const players = Object.entries(gameData.players);
+  const scores = gameData.scores;
+
+  const playersWithScores = players.map((player) => {
+    // player[0] uid player[1] displayName
+    return { ...player[1], score: scores[player[0]] };
+  });
+
+  const scoreBoard = playersWithScores.sort((a, b) => b.score - a.score);
+  return scoreBoard;
+};
+
+export const getPlaceMedal = (place) => {
+  if (place === 1) return "🥇";
+  if (place === 2) return "🥈";
+  if (place === 3) return "🥉";
+  return "🎖";
+};
+
 export const updateGameOnline = ({ gameID, updates }) => {
   return update(ref(database, `games/${gameID}`), updates);
 };
 
 export const startGameOnline = ({ id: gameID, players }) => {
-  const initScore = () => {
-    const score = {};
+  const initScores = () => {
+    const scores = {};
     for (const player of Object.keys(players)) {
-      score[player] = 0;
+      scores[player] = 0;
     }
-    return score;
+    return scores;
   };
   const updates = {
-    score: initScore(),
+    scores: initScores(),
     state: "started",
   };
   updateGameOnline({ gameID, updates });

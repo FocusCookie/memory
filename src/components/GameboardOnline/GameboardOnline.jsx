@@ -54,12 +54,12 @@ export const GameboardOnline = ({ game, ...props }) => {
 
   const handleEndOfTurn = () => {
     if (revealedCardsMatch(board)) {
-      const newScore = game.score[userID] + 1;
+      const newScores = game.scores[userID] + 1;
       const newBoard = clearCards(board);
       const updates = {
         turn: 0,
         board: newBoard,
-        [`score/${userID}`]: newScore,
+        [`scores/${userID}`]: newScores,
       };
       if (endOfGame(newBoard)) updates.state = "done";
       updateGameOnline({
