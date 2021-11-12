@@ -78,10 +78,6 @@ export const GameboardOnline = ({ game, ...props }) => {
         },
       });
     }
-
-    // if EOG handle EOG
-    // add guard clause so you cant click revealed cards
-    // add guard against multi clicks before db update and state refresh
   };
 
   useEffect(() => {
@@ -109,7 +105,6 @@ export const GameboardOnline = ({ game, ...props }) => {
 
   const handlePlaycardClick = async (cardID) => {
     if (!itsMyTurn || !turnIsAllowed(turn)) return;
-    console.log("clicked card: ", cardID);
     await handleCardReveal(cardID);
   };
 
@@ -131,5 +126,5 @@ export const GameboardOnline = ({ game, ...props }) => {
 };
 
 GameboardOnline.propTypes = {
-  game: PropTypes.object,
+  game: PropTypes.object.isRequired,
 };

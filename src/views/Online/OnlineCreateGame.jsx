@@ -24,11 +24,6 @@ export function OnlineCreateGame({ ...props }) {
       <div className="p-4 h-full flex flex-col gap-4 items-center">
         <h1>Create game</h1>
         <CreateGame />
-        <Button
-          label="CANCEL CREATION"
-          variant="secondary"
-          onClick={() => history.push("/")}
-        />
       </div>
     </div>
   );

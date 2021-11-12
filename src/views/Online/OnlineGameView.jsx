@@ -147,7 +147,6 @@ export function OnlineGameView({ ...props }) {
                 highlight={highlightNumberOfCurrentPlayer(gameData)}
               />
             </div>
-            <h1 className="text-9xl text-primary flex-grow">🎮 GAME TIME 🎮</h1>
             <GameboardOnline game={gameData} />
           </div>
         )}

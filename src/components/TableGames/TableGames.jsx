@@ -31,12 +31,10 @@ export const TableGames = ({ ...props }) => {
   const rows = data
     ?.filter(
       ({ maxPlayers, players, state }) =>
-        // quick and dirty fix wegen undefinierter player: || []
         gameIsNotFull(maxPlayers, players || []) && state === "waiting"
     )
     ?.map(({ id, theme, maxPlayers, players, numberOfPairs }) => [
       theme,
-      // quick and dirty fix wegen undefinierter player: || []
       `${Object.keys(players || []).length}/${maxPlayers}`,
       numberOfPairs,
       <Button
