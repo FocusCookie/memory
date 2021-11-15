@@ -1,3 +1,40 @@
+# Play the Game
+
+You can find a hosted version [here 🎮](https://memory-f0679.web.app/).
+
+# Design
+
+Have a look at our [wireframes](https://www.figma.com/file/0JFAvf5jnk0s8XdAOoiNjo/Memory), made with ❤ by [FocusCookie](https://github.com/FocusCookie/).
+
+# Techstack
+
+## Storybook
+
+As component Gallery.
+https://storybook.js.org/
+
+## Firebase v.9 && reactfire
+
+https://firebase.google.com/docs
+Important! We use version 9 of firebase. This version is functional based and not classed based anymore. The Docs of firebase are not fully updated yet.
+
+```
+< v9
+databseRef.remove()
+
+v9 >
+remove(databaseRef)
+```
+
+## TailwindCSS
+
+https://tailwindcss.com/
+
+## Axios
+
+Instead of fetch we use axios.
+https://axios-http.com/
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
@@ -68,32 +105,3 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `yarn build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-
-# Techstack
-
-## Storybook
-
-As component Gallery.
-https://storybook.js.org/
-
-## Firebase v.9 && reactfire
-
-https://firebase.google.com/docs
-Important! We use version 9 of firebase. This version is functional based and not classed based anymore. The Docs of firebase are not fully updated yet.
-
-```
-< v9
-databseRef.remove()
-
-v9 >
-remove(databaseRef)
-```
-
-## TailwindCSS
-
-https://tailwindcss.com/
-
-## Axios
-
-Instead of fetch we use axios.
-https://axios-http.com/
