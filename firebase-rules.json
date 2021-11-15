@@ -1,0 +1,58 @@
+{
+  "rules": {
+    ".read": "auth !== null",
+    "playersOnline": {
+      "$user_id": {
+        ".write": "auth.uid === $user_id"
+      }
+    },
+    "games": {
+      "$game_id": {
+        // create Games
+        ".write": "!data.exists()",
+        // reveal a card
+        "turn": {
+          ".write": "data.parent().child('currentPlayer').val() === auth.uid"
+        },
+        // end your turn
+        "currentPlayer": {
+          ".write": "data.val() === auth.uid"
+        },
+        // update the board
+        "board": {
+          ".write": "data.parent().child('currentPlayer').val() === auth.uid"
+        },
+        "scores": {
+          // initialize scores
+          ".write": "!data.exists()",
+          // update your score
+          "$user_id": {
+            ".write": "auth.uid === $user_id"
+          }
+        },
+        // join / leave games
+        "players": {
+          "$user_id": {
+            ".write": "auth.uid === $user_id"
+          }
+        },
+        // set your ready state
+        "playersReady": {
+          "$user_id": {
+            ".write": "auth.uid === $user_id"
+          }
+        },
+        // set your rematch state
+        "rematch": {
+          "$user_id": {
+            ".write": "auth.uid === $user_id"
+          }
+        },
+        // start the game if you are the creator the game hasn't started or ended yet || TODO: end the game
+        "state": {
+          ".write": "(data.parent().child('creator').val() === auth.uid && data.val() === 'waiting' && newData.val() === 'started') || newData.val() === 'done'"
+        }
+      }
+    }
+  }
+}
