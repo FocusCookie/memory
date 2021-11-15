@@ -43,7 +43,7 @@ export function OnlineGameView({ ...props }) {
     if (gameData.creator !== userID || gameData.state !== "waiting") return;
     if (
       allPlayersAreReady(gameData) &&
-      Object.keys(gameData.players).length === gameData.maxPlayers
+      Object.keys(gameData.players).length > 1
     )
       startGameOnline(gameData);
   }, [gameData?.playersReady]);
