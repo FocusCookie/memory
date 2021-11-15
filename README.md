@@ -5,6 +5,7 @@ You can find a hosted version [here 🎮](https://memory-f0679.web.app/).
 # Design
 
 Have a look at our [wireframes](https://www.figma.com/file/0JFAvf5jnk0s8XdAOoiNjo/Memory), made with ❤ by [FocusCookie](https://github.com/FocusCookie/).
+We also drew some [UX flowcharts & data(base) structures](https://app.diagrams.net/#HFocusCookie%2Fmemory%2Fmain%2FmultiplayerArchitecture).
 
 # Techstack
 
@@ -105,3 +106,7 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `yarn build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+# Internal
+
+[Trello](https://trello.com/b/5GP0Kw1r/react-memory)
