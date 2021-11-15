@@ -15,7 +15,7 @@ export const PlayCard = ({ reveal, cleared, onClick, card, ...props }) => {
             className="playCard__back"
             style={{ backgroundImage: `url(${card.image})` }}
           >
-            {card.name}
+            <span className="playCard__name">{card.name}</span>
           </div>
         </div>
       )}

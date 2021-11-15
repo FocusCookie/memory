@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { getAuth } from "firebase/auth";
-import { gameIsOver, updateGameOnline } from "../../services/game.service";
+import { updateGameOnline } from "../../services/game.service";
 import { PlayCard } from "../PlayCard/PlayCard";
 
 const turnIsAllowed = (turn) => turn < 2;
@@ -119,7 +119,7 @@ export const GameboardOnline = ({ game, ...props }) => {
   };
 
   return (
-    <div className="board" {...props}>
+    <div className="board-online" {...props}>
       {board.map((card) => renderCard(card))}
     </div>
   );

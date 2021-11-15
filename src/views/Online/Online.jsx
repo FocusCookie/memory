@@ -22,11 +22,11 @@ export function Online({ ...props }) {
           />
         </Menu>
       </div>
-      <div className="p-4 h-full w-full flex flex-row gap-4 justify-center">
+      <div className="p-4 h-full w-full flex flex-col justify-start md:flex-row md:justify-center gap-4 ">
         <div>
           <OnlinePlayers />
         </div>
-        <div className="flex flex-col items-end gap-4 w-full">
+        <div className="flex flex-col items-end gap-4 md:w-3/5">
           <div className="self-stretch">
             <TableGames />
           </div>
