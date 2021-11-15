@@ -22,7 +22,6 @@ export function OnlineCreateGame({ ...props }) {
         </Menu>
       </div>
       <div className="p-4 h-full flex flex-col gap-4 items-center">
-        <h1>Create game</h1>
         <CreateGame />
       </div>
     </div>

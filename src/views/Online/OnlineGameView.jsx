@@ -74,7 +74,7 @@ export function OnlineGameView({ ...props }) {
   };
 
   const showLobby = (gameData) => (
-    <div className="flex flex-col gap-8 w-full max-w-2xl">
+    <div className="flex flex-col  gap-8 w-full items-stretch max-w-2xl">
       <div className="flex flex-row justify-between bg-primary rounded-xl text-white text-4xl font-bold p-4">
         <p>{gameData.theme}</p>
         <p>{`${gameData.numberOfPairs} Pairs`}</p>
@@ -125,7 +125,7 @@ export function OnlineGameView({ ...props }) {
   return (
     <div
       {...props}
-      className="bg-greyscale-offWhite h-full flex flex-col justify-center items-center  w-screen"
+      className="bg-greyscale-offWhite h-full flex flex-col justify-start items-center  w-screen"
     >
       <div className="flex flex-row justify-center gap-4">
         <Menu initiallyOpen={false}>
@@ -136,7 +136,7 @@ export function OnlineGameView({ ...props }) {
           />
         </Menu>
       </div>
-      <div className="p-4 h-full w-full flex flex-col gap-4 justify-start items-center">
+      <div className="p-4  w-full flex flex-row gap-4 justify-center items-center">
         {loadGame ? (
           <div className="flex flex-col gap-4 items-center">
             <Spinner size="5rem" />
@@ -144,36 +144,32 @@ export function OnlineGameView({ ...props }) {
           </div>
         ) : gameData.state === "waiting" ? (
           showLobby(gameData)
+        ) : gameData.state === "done" ? (
+          <Modal>
+            <div className="max-w-2xl">
+              <CardHiCF
+                img={{ src: Cover, alt: "Rick and Morty" }}
+                content={<Scoreboard game={gameData} />}
+                footer={
+                  <Button
+                    label="LEAVE GAME"
+                    onClick={() => history.push("/online")}
+                  />
+                }
+              />
+            </div>
+          </Modal>
         ) : (
-          <div className="text-center">
-            {gameData.state === "done" ? (
-              <Modal>
-                <div className="max-w-2xl">
-                  <CardHiCF
-                    img={{ src: Cover, alt: "Rick and Morty" }}
-                    content={<Scoreboard game={gameData} />}
-                    footer={
-                      <Button
-                        label="LEAVE GAME"
-                        onClick={() => history.push("/online")}
-                      />
-                    }
-                  />
-                </div>
-              </Modal>
-            ) : (
-              <div className="flex flex-row gap-4 justify-between items-start w-full">
-                <div className="w-min">
-                  <Table
-                    card
-                    headers={["Player", "Score"]}
-                    rows={playerScoreRows(gameData)}
-                    highlight={highlightNumberOfCurrentPlayer(gameData)}
-                  />
-                </div>
-                <GameboardOnline game={gameData} />{" "}
-              </div>
-            )}
+          <div className="flex flex-col lg:flex-row gap-8 justify-center items-center lg:items-start  h-full w-full">
+            <div className="w-min">
+              <Table
+                card
+                headers={["Player", "Score"]}
+                rows={playerScoreRows(gameData)}
+                highlight={highlightNumberOfCurrentPlayer(gameData)}
+              />
+            </div>
+            <GameboardOnline game={gameData} />{" "}
           </div>
         )}
       </div>

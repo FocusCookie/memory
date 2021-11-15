@@ -1,0 +1,3 @@
+.board-online {
+  @apply grid grid-cols-4 gap-4 md:grid-cols-8;
+}
