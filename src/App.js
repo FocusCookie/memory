@@ -1,5 +1,5 @@
 import "./styles/App.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Home } from "./views/Home/Home";
 import { Offline } from "./views/Offline/Offline";
@@ -10,11 +10,12 @@ import { Login } from "./components/Login/Login";
 import { useFirebaseApp, DatabaseProvider, useUser } from "reactfire";
 import { getDatabase } from "firebase/database"; // Firebase v9+
 import { register, login } from "./services/auth.service.mjs";
+import { setPlayerOnline } from "./services/player.service.mjs";
 
 function App() {
   const app = useFirebaseApp();
   const database = getDatabase(app);
-  const { data: loggedinUser } = useUser();
+  const { status: userStatus, data: loggedinUser } = useUser();
   const [loadingLogin, setLoadingLogin] = useState(false);
   const [loginError, setLoginError] = useState("");
 
@@ -45,6 +46,12 @@ function App() {
       console.log(error.message);
     }
   };
+
+  useEffect(() => {
+    if (userStatus === "success" && loggedinUser) {
+      setPlayerOnline(loggedinUser);
+    }
+  }, [userStatus, loggedinUser]);
 
   return (
     <DatabaseProvider sdk={database}>
