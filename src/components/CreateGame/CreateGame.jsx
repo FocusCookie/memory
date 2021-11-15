@@ -12,9 +12,11 @@ export const CreateGame = ({ initMaxPlayers, initNumberOfPairs, ...props }) => {
   const [theme, setTheme] = useState(themes[0]);
   const [maxPlayers, setMaxPlayers] = useState(initMaxPlayers);
   const [numberOfPairs, setNumberOfPairs] = useState(initNumberOfPairs);
+  const [creatingGame, setCreatingGame] = useState(false);
   const history = useHistory();
   const auth = getAuth();
   const createGame = async () => {
+    setCreatingGame(true);
     const gameID = await createGameOnline({
       theme,
       maxPlayers,
@@ -47,11 +49,17 @@ export const CreateGame = ({ initMaxPlayers, initNumberOfPairs, ...props }) => {
         </div>
       </Card>
       <div className="create-game__buttons">
-        <Button label="CREATE" onClick={createGame} />
+        <Button
+          label="CREATE"
+          onClick={createGame}
+          loading={creatingGame}
+          disabled={creatingGame}
+        />
         <Button
           label="CANCEL"
           variant="secondary"
-          onClick={() => history.push("/")}
+          onClick={() => history.push("/online")}
+          disabled={creatingGame}
         />
       </div>
     </div>
