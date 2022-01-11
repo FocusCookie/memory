@@ -11,7 +11,7 @@ import cover from "../../assets/Cover.jpg";
 export function Offline({ ...props }) {
   useEffect(() => {
     async function fetchCards() {
-      const cards = await getCards("rickmorty", 2);
+      const cards = await getCards("rickmorty", 20);
       setCards(cards);
       setLoading(false);
     }
