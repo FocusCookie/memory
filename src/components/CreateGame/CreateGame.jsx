@@ -44,7 +44,8 @@ export const CreateGame = ({ initMaxPlayers, initNumberOfPairs, ...props }) => {
           <IncrementStepper
             label="CARD PAIRS"
             onChange={(value) => setNumberOfPairs(value)}
-            min={1}
+            min={15}
+            max={50}
           />
         </div>
       </Card>
